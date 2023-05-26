@@ -27,9 +27,19 @@ export default function ProfitsTable({ profits }) {
     const memoizedDates = React.useMemo(() => profits, [profits]);
     // Stryker enable ArrayDeclaration
 
-    return <OurTable
-        data={memoizedDates}
-        columns={memoizedColumns}
-        testid={"ProfitsTable"}
-    />;
+    
+    return (
+        <div 
+            style={ 
+                // Stryker disable next-line all: don't test CSS params
+                { overflow: "auto" } 
+            }
+        >
+            <OurTable
+                data={memoizedDates}
+                columns={memoizedColumns}
+                testid={"ProfitsTable"}
+            /> 
+        </div>
+    );
 };
