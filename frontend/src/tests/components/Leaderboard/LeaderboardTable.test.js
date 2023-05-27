@@ -65,8 +65,8 @@ describe("LeaderboardTable tests", () => {
 
     );
 
-    const expectedHeaders = ['(Admin) userCommons Id', 'Username', 'User Id', 'Total Wealth', 'Cows Owned', 'Cow Health'];
-    const expectedFields = ['id', 'userId', 'username', 'totalWealth','numOfCows', 'cowHealth'];
+    const expectedHeaders = ['(Admin) userCommons Id', 'Username', 'User Id', 'Total Wealth', 'Cows Owned', 'Cow Health', 'Total Cows Bought'];
+    const expectedFields = ['id', 'userId', 'username', 'totalWealth','numOfCows', 'cowHealth', 'totalCowsBought'];
     const testId = "LeaderboardTable";
 
     expectedHeaders.forEach((headerText) => {
@@ -87,6 +87,7 @@ describe("LeaderboardTable tests", () => {
     expect(screen.getByTestId(`${testId}-cell-row-1-col-userId`)).toHaveTextContent("2");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-username`)).toHaveTextContent("two");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-totalWealth`)).toHaveTextContent("1000");
+    
 
   });
 
