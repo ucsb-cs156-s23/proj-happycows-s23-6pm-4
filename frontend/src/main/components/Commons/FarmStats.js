@@ -21,6 +21,9 @@ const FarmStats = ({userCommons}) => {
             <Card.Text>
                 Cow Health: {Math.round(userCommons.cowHealth*100)/100}%
             </Card.Text>
+            <Card.Text>
+                Total Cows Bought: {userCommons.totalCowsBought}
+            </Card.Text>
         </Card.Body>
         </Card>
     ); 
