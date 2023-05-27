@@ -71,7 +71,6 @@ public class UserCommonsController extends ApiController {
         return userCommons;
       }
 
-  //BUG: Sometimes there is a glitch where clicking the Buy Max button buys more than the max, idk cause
   @ApiOperation(value = "Buy cows, totalWealth updated")
   @PreAuthorize("hasRole('ROLE_USER')")
   @PutMapping("/buy")
@@ -116,7 +115,9 @@ public class UserCommonsController extends ApiController {
           .orElseThrow(() -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
         if(userCommons.getNumOfCows() >= 1){
-          if (numCows > userCommons.getNumOfCows()) numCows = userCommons.getNumOfCows();
+          //if (numCows > userCommons.getNumOfCows()) numCows = userCommons.getNumOfCows();
+          //numCows = (numCows < userCommons.getNumOfCows()) ? numCows : userCommons.getNumOfCows();
+          numCows = Math.min(numCows, userCommons.getNumOfCows());
           userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * commons.getCowPrice()));
           userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);
         }
