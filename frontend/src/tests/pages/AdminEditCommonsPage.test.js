@@ -49,7 +49,8 @@ describe("AdminEditCommonsPage tests", () => {
                 "milkPrice": 10,
                 "degradationRate": 20.3,
                 "carryingCapacity": 100,
-                "showLeaderboard": false,
+                "scaleCowSalePrice": false,
+                "showLeaderboard": false
             });
             axiosMock.onPut('/api/commons/update').reply(200, {
                 "id": 5,
@@ -60,7 +61,8 @@ describe("AdminEditCommonsPage tests", () => {
                 "milkPrice": 5,
                 "degradationRate": 40.3,
                 "carryingCapacity": 200,
-                "showLeaderboard": false,
+                "scaleCowSalePrice": true,
+                "showLeaderboard": true
             });
         });
 
@@ -93,6 +95,7 @@ describe("AdminEditCommonsPage tests", () => {
             const startingDateField = screen.getByLabelText(/Starting Date/);
             const degradationRateField = screen.getByLabelText(/Degradation Rate/);
             const carryingCapacityField = screen.getByLabelText(/Carrying Capacity/);
+            const scaleCowSalePriceField = screen.getByLabelText(/Cow Sale Price Decreases with Health\?/);
             const showLeaderboardField = screen.getByLabelText(/Show Leaderboard\?/);
 
             expect(nameField).toHaveValue("Seths Common");
@@ -102,6 +105,7 @@ describe("AdminEditCommonsPage tests", () => {
             expect(milkPriceField).toHaveValue(10);
             expect(degradationRateField).toHaveValue(20.3);
             expect(carryingCapacityField).toHaveValue(100);
+            expect(scaleCowSalePriceField).not.toBeChecked();
             expect(showLeaderboardField).not.toBeChecked();
         });
 
@@ -123,6 +127,7 @@ describe("AdminEditCommonsPage tests", () => {
             const startingDateField = screen.getByLabelText(/Starting Date/);
             const degradationRateField = screen.getByLabelText(/Degradation Rate/);
             const carryingCapacityField = screen.getByLabelText(/Carrying Capacity/);
+            const scaleCowSalePriceField = screen.getByLabelText(/Cow Sale Price Decreases with Health\?/);
             const showLeaderboardField = screen.getByLabelText(/Show Leaderboard\?/);
 
             expect(nameField).toHaveValue("Seths Common");
@@ -132,6 +137,7 @@ describe("AdminEditCommonsPage tests", () => {
             expect(milkPriceField).toHaveValue(10);
             expect(degradationRateField).toHaveValue(20.3);
             expect(carryingCapacityField).toHaveValue(100);
+            expect(scaleCowSalePriceField).not.toBeChecked();
             expect(showLeaderboardField).not.toBeChecked();
 
             const submitButton = screen.getByText("Update");
@@ -145,6 +151,7 @@ describe("AdminEditCommonsPage tests", () => {
             fireEvent.change(milkPriceField, { target: { value: 5 } })
             fireEvent.change(degradationRateField, { target: { value: 40.3 } })
             fireEvent.change(carryingCapacityField, { target: { value: 200 } })
+            fireEvent.click(scaleCowSalePriceField)
             fireEvent.click(showLeaderboardField)
 
             fireEvent.click(submitButton);
@@ -163,7 +170,8 @@ describe("AdminEditCommonsPage tests", () => {
                 "startingDate": "2022-03-07T00:00:00.000Z",
                 "degradationRate": 40.3,
                 "carryingCapacity": 200,
-                "showLeaderboard": true,
+                "scaleCowSalePrice": true,
+                "showLeaderboard": true
             })); // posted object
         });
     });

@@ -67,6 +67,11 @@ export default function CommonsTable({ commons, currentUser }) {
             id: 'commons.degradationRate'
         },
         {
+            Header:'Cow Sale Price Decreases with Health?',
+            id: 'commons.scaleCowSalePrice', // needed for tests
+            accessor: (row, _rowIndex) => String(row.commons.scaleCowSalePrice) // hack needed for boolean values to show up
+        },
+        {
             Header:'Show Leaderboard?',
             id: 'commons.showLeaderboard', // needed for tests
             accessor: (row, _rowIndex) => String(row.commons.showLeaderboard) // hack needed for boolean values to show up
@@ -86,16 +91,12 @@ export default function CommonsTable({ commons, currentUser }) {
 
     const columnsIfAdmin = [
         ...columns,
-        ButtonColumn("Edit",
-"primary", editCallback, testid),
-        ButtonColumn("Delete",
-"danger", deleteCallback, testid),
-        ButtonColumn("Leaderboard",
-"secondary", leaderboardCallback, testid)
+        ButtonColumn("Edit", "primary", editCallback, testid),
+        ButtonColumn("Delete", "danger", deleteCallback, testid),
+        ButtonColumn("Leaderboard", "secondary", leaderboardCallback, testid)
     ];
 
-    const columnsToDisplay = hasRole(currentUser,
-"ROLE_ADMIN") ? columnsIfAdmin : columns;
+    const columnsToDisplay = hasRole(currentUser, "ROLE_ADMIN") ? columnsIfAdmin : columns;
 
     return <OurTable
         data={commons}

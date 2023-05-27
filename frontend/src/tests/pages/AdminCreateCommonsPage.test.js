@@ -61,6 +61,7 @@ describe("AdminCreateCommonsPage tests", () => {
             "startingDate": "2022-03-05T00:00:00",
             "degradationRate": 30.4,
             "carryingCapacity": 25,
+            "scaleCowSalePrice": false,
             "showLeaderboard": false
         });
 
@@ -81,6 +82,7 @@ describe("AdminCreateCommonsPage tests", () => {
         const startDateField = screen.getByLabelText("Starting Date");
         const degradationRateField = screen.getByLabelText("Degradation Rate");
         const carryingCapacityField = screen.getByLabelText("Carrying Capacity");
+        const scaleCowSalePriceField = screen.getByLabelText("Cow Sale Price Decreases with Health?");
         const showLeaderboardField = screen.getByLabelText("Show Leaderboard?");
         const button = screen.getByTestId("CommonsForm-Submit-Button");
 
@@ -91,6 +93,7 @@ describe("AdminCreateCommonsPage tests", () => {
         fireEvent.change(startDateField, { target: { value: '2022-03-05' } })
         fireEvent.change(degradationRateField, { target: { value: '30.4' } })
         fireEvent.change(carryingCapacityField, { target: { value: '25' } })
+        fireEvent.change(scaleCowSalePriceField, { target: { value: true } })
         fireEvent.change(showLeaderboardField, { target: { value: true } })
         fireEvent.click(button);
 
@@ -108,6 +111,7 @@ describe("AdminCreateCommonsPage tests", () => {
             startingDate: '2022-03-05T00:00:00.000Z', // [1]
             degradationRate: 30.4,
             carryingCapacity: 25,
+            scaleCowSalePrice: false,
             showLeaderboard: false
         };
 

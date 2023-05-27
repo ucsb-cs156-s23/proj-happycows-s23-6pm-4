@@ -36,6 +36,7 @@ export default function CommonsEditPage() {
         "startingDate": commons.startingDate,
         "degradationRate": commons.degradationRate,
         "carryingCapacity": commons.carryingCapacity,
+        "scaleCowSalePrice": commons.scaleCowSalePrice,
         "showLeaderboard": commons.showLeaderboard,
     }
   });
@@ -64,7 +65,7 @@ export default function CommonsEditPage() {
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Edit  Commons</h1>
+        <h1>Edit Commons</h1>
         {commons &&
           <CommonsForm initialCommons={commons} submitAction={submitAction} buttonLabel="Update" />
         }

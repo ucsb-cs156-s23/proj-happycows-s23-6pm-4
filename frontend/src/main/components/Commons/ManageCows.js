@@ -41,8 +41,12 @@ const ManageCows = ({userCommons, commons, onBuy, onSell}) =>  {
                         <br/>
                     </Col>
                 </Row>
+                {!!commons?.scaleCowSalePrice &&
+                    <Card.Text>
                     Note: Buying cows buys at current cow price, but selling cows sells at current cow price
                     times the average health of cows as a percentage! 
+                    </Card.Text> 
+                }
         </Card.Body>
         </Card>
     ); 
