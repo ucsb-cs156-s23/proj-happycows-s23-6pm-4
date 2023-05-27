@@ -54,7 +54,7 @@ describe("PlayPage tests", () => {
             </QueryClientProvider>
         );
 
-        expect(await screen.getByTestId("buy-a-cow-button")).toBeInTheDocument();
+        expect(await screen.findByTestId("buy-a-cow-button")).toBeInTheDocument();
 
         const buyMaxCowsButton = screen.getByTestId("buy-max-cows-button");
         fireEvent.click(buyMaxCowsButton);
