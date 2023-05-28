@@ -32,7 +32,6 @@ export default function PlayPage() {
     );
   // Stryker enable all 
 
-
   // Stryker disable all 
   const { data: commons } =
     useBackend(
@@ -61,64 +60,52 @@ export default function PlayPage() {
     );
   // Stryker enable all 
 
-
   const onSuccessBuy = () => {
-    toast(`Cow bought!`);
+    toast(`Cows bought!`);
+  }
+  const onSuccessSell = () => {
+    toast(`Cows sold!`);
   }
 
-  const objectToAxiosParamsBuy = (newUserCommons) => ({
+  const onBuy = (userCommons, numToBuy) => {
+    mutationBuy.mutate({userCommons, numToBuy})
+  };
+  const onSell = (userCommons, numToSell) => {
+    mutationSell.mutate({userCommons, numToSell})
+  };
+
+  const objectToAxiosParamsBuy = ({newUserCommons, numToBuy}) => ({
     url: "/api/usercommons/buy",
     method: "PUT",
     data: newUserCommons,
     params: {
-      commonsId: commonsId
+      commonsId: commonsId,
+      numCows: numToBuy
     }
   });
-
-
-  // Stryker disable all 
-  const mutationbuy = useBackendMutation(
+  const mutationBuy = useBackendMutation(
     objectToAxiosParamsBuy,
     { onSuccess: onSuccessBuy },
     // Stryker disable next-line all : hard to set up test for caching
     [`/api/usercommons/forcurrentuser?commonsId=${commonsId}`]
   );
-  // Stryker enable all 
 
-
-  const onBuy = (userCommons) => {
-    mutationbuy.mutate(userCommons)
-  };
-
-
-  const onSuccessSell = () => {
-    toast(`Cow sold!`);
-  }
-
-  // Stryker disable all 
-  const objectToAxiosParamsSell = (newUserCommons) => ({
+  const objectToAxiosParamsSell = ({newUserCommons, numToSell}) => ({
     url: "/api/usercommons/sell",
     method: "PUT",
     data: newUserCommons,
     params: {
-      commonsId: commonsId
+      commonsId: commonsId,
+      numCows: numToSell
     }
   });
-  // Stryker enable all 
-
-
-  // Stryker disable all 
-  const mutationsell = useBackendMutation(
+  const mutationSell = useBackendMutation(
     objectToAxiosParamsSell,
     { onSuccess: onSuccessSell },
+    // Stryker disable next-line all : hard to set up test for caching
     [`/api/usercommons/forcurrentuser?commonsId=${commonsId}`]
   );
-  // Stryker enable all 
 
-
-  const onSell = (userCommons) => {
-    mutationsell.mutate(userCommons)
-  };
 
   return (
     <div style={{ backgroundSize: 'cover', backgroundImage: `url(${Background})` }}>

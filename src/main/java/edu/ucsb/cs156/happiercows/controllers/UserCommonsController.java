@@ -49,48 +49,47 @@ public class UserCommonsController extends ApiController {
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @GetMapping("")
   public UserCommons getUserCommonsById(
-      @ApiParam("userId") @RequestParam Long userId,
-      @ApiParam("commonsId") @RequestParam Long commonsId) throws JsonProcessingException {
-
-    UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
-        .orElseThrow(
-            () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
-    return userCommons;
-  }
+    @ApiParam("userId") @RequestParam Long userId,
+    @ApiParam("commonsId") @RequestParam Long commonsId)
+      throws JsonProcessingException {
+        UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
+          .orElseThrow(() -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
+        return userCommons;
+      }
 
   @ApiOperation(value = "Get a user commons for current user")
   @PreAuthorize("hasRole('ROLE_USER')")
   @GetMapping("/forcurrentuser")
   public UserCommons getUserCommonsById(
-      @ApiParam("commonsId") @RequestParam Long commonsId) throws JsonProcessingException {
-
-    User u = getCurrentUser().getUser();
-    Long userId = u.getId();
-    UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
-        .orElseThrow(
-            () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
-    return userCommons;
-  }
-
-  @ApiOperation(value = "Buy a cow, totalWealth updated")
-  @PreAuthorize("hasRole('ROLE_USER')")
-  @PutMapping("/buy")
-  public ResponseEntity<String> putUserCommonsByIdBuy(
-          @ApiParam("commonsId") @RequestParam Long commonsId) throws NotEnoughMoneyException, JsonProcessingException{
-
+    @ApiParam("commonsId") @RequestParam Long commonsId)
+      throws JsonProcessingException {
         User u = getCurrentUser().getUser();
         Long userId = u.getId();
 
-        Commons commons = commonsRepository.findById(commonsId).orElseThrow( 
-          ()->new EntityNotFoundException(Commons.class, commonsId));
         UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
-        .orElseThrow(
-            () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
+          .orElseThrow(() -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
+        return userCommons;
+      }
 
-        if(userCommons.getTotalWealth() >= commons.getCowPrice() ){
-          userCommons.setTotalWealth(userCommons.getTotalWealth() - commons.getCowPrice());
-          userCommons.setNumOfCows(userCommons.getNumOfCows() + 1);
-          userCommons.setTotalCowsBought(userCommons.getTotalCowsBought() + 1);
+  @ApiOperation(value = "Buy cows, totalWealth updated")
+  @PreAuthorize("hasRole('ROLE_USER')")
+  @PutMapping("/buy")
+  public ResponseEntity<String> putUserCommonsByIdBuy(
+    @ApiParam("commonsId") @RequestParam Long commonsId,
+    @ApiParam("numCows") @RequestParam int numCows) // Want to set 1 as the default when nothing is passed in
+      throws NotEnoughMoneyException, JsonProcessingException{
+        User u = getCurrentUser().getUser();
+        Long userId = u.getId();
+
+        Commons commons = commonsRepository.findById(commonsId)
+          .orElseThrow(()->new EntityNotFoundException(Commons.class, commonsId));
+        UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
+          .orElseThrow(() -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
+
+        if((numCows > 0) && (userCommons.getTotalWealth() >= (numCows * commons.getCowPrice()))){
+          userCommons.setTotalWealth(userCommons.getTotalWealth() - (numCows * commons.getCowPrice()));
+          userCommons.setNumOfCows(userCommons.getNumOfCows() + numCows);
+          userCommons.setTotalCowsBought(userCommons.getTotalCowsBought() + numCows);
         }
         else{
           throw new NotEnoughMoneyException("You need more money!");
@@ -99,26 +98,29 @@ public class UserCommonsController extends ApiController {
 
         String body = mapper.writeValueAsString(userCommons);
         return ResponseEntity.ok().body(body);
-    }
+      }
 
-  @ApiOperation(value = "Sell a cow, totalWealth updated")
+  @ApiOperation(value = "Sell cows, totalWealth updated")
   @PreAuthorize("hasRole('ROLE_USER')")
   @PutMapping("/sell")
   public ResponseEntity<String> putUserCommonsByIdSell(
-          @ApiParam("commonsId") @RequestParam Long commonsId) throws NoCowsException, JsonProcessingException {
+    @ApiParam("commonsId") @RequestParam Long commonsId,
+    @ApiParam("numCows") @RequestParam int numCows) // Want to set 1 as the default when nothing is passed in
+      throws NoCowsException, JsonProcessingException {
         User u = getCurrentUser().getUser();
         Long userId = u.getId();
 
-        Commons commons = commonsRepository.findById(commonsId).orElseThrow( 
-          ()->new EntityNotFoundException(Commons.class, commonsId));
+        Commons commons = commonsRepository.findById(commonsId)
+          .orElseThrow(()->new EntityNotFoundException(Commons.class, commonsId));
         UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
-        .orElseThrow(
-            () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
+          .orElseThrow(() -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
-
-        if(userCommons.getNumOfCows() >= 1 ){
-          userCommons.setTotalWealth(userCommons.getTotalWealth() + commons.getCowPrice());
-          userCommons.setNumOfCows(userCommons.getNumOfCows() - 1);
+        if(userCommons.getNumOfCows() >= 1){
+          //if (numCows > userCommons.getNumOfCows()) numCows = userCommons.getNumOfCows();
+          //numCows = (numCows < userCommons.getNumOfCows()) ? numCows : userCommons.getNumOfCows();
+          numCows = Math.min(numCows, userCommons.getNumOfCows());
+          userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * commons.getCowPrice()));
+          userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);
         }
         else{
           throw new NoCowsException("You have no cows to sell!");
@@ -127,17 +129,16 @@ public class UserCommonsController extends ApiController {
 
         String body = mapper.writeValueAsString(userCommons);
         return ResponseEntity.ok().body(body);
-    }
+      }
 
-    @ApiOperation(value = "Get all user commons for a specific commons")
-    @GetMapping("/commons/all")
-    public  ResponseEntity<String> getUsersCommonsByCommonsId(
-        @ApiParam("commonsId") @RequestParam Long commonsId) throws JsonProcessingException {
-      Iterable<UserCommons> uc = userCommonsRepository.findByCommonsId(commonsId);
-      
-   
-    String body = mapper.writeValueAsString(uc);
-    return ResponseEntity.ok().body(body);
-  }
+  @ApiOperation(value = "Get all user commons for a specific commons")
+  @GetMapping("/commons/all")
+  public ResponseEntity<String> getUsersCommonsByCommonsId(
+    @ApiParam("commonsId") @RequestParam Long commonsId)
+      throws JsonProcessingException {
+        Iterable<UserCommons> uc = userCommonsRepository.findByCommonsId(commonsId);
 
+        String body = mapper.writeValueAsString(uc);
+        return ResponseEntity.ok().body(body);
+      }
 }

@@ -1,4 +1,14 @@
 const userCommonsFixtures = {
+    // Backend does not include "commons" or "user", so they probably shouldn't be in these fixtures
+    oneRealUserCommons: {
+        "id": 1,
+        "userId": 1,
+        "commonsId": 1,
+        "username": "idk if this field is even used",
+        "totalWealth": 1000,
+        "numOfCows": 5,
+        "cowHealth": 98.0
+    },
     oneUserCommons: 
     [
         {
