@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import ManageCows from "main/components/Commons/ManageCows"; 
-import userCommonsFixtures from "fixtures/userCommonsFixtures"; 
 import commonsFixtures from "fixtures/commonsFixtures";
+import userCommonsFixtures from "fixtures/userCommonsFixtures";
+import ManageCows from "main/components/Commons/ManageCows";
 
 describe("ManageCows tests", () => {
 
@@ -39,6 +39,28 @@ describe("ManageCows tests", () => {
         fireEvent.click(sellAllButton);
         await waitFor( ()=>expect(mockSell).toHaveBeenCalled());
         
+    });
+
+    test("warning appears when cow sell price is scaled", async () => {
+        const mockBuy = jest.fn();
+        const mockSell = jest.fn();
+
+        render(
+            <ManageCows userCommons = {userCommonsFixtures.oneRealUserCommons} commons = {commonsFixtures.threeCommons[0]} onBuy={mockBuy} onSell={mockSell} />
+        );
+
+        expect(await screen.findByText(/Note: Buying cows buys at current cow price, but selling cows sells at current cow price times the average health of cows as a percentage!/)).toBeInTheDocument();
+    });
+
+    test("warning is hidden when cow sell price is constant", async () => {
+        const mockBuy = jest.fn();
+        const mockSell = jest.fn();
+        
+        render(
+            <ManageCows userCommons = {userCommonsFixtures.oneRealUserCommons} commons = {commonsFixtures.threeCommons[1]} onBuy={mockBuy} onSell={mockSell} />
+        );
+
+        expect(screen.queryByText(/Note: Buying cows buys at current cow price, but selling cows sells at current cow price times the average health of cows as a percentage!/)).not.toBeInTheDocument();
     });
 
 });

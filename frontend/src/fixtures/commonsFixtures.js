@@ -25,7 +25,7 @@ const commonsFixtures = {
             "milkPrice": 10,
             "degradationRate": .5,
             "showLeaderboard": true,
-            "scaleCowSalePrice": true,
+            "scaleCowSalePrice": false,
             "carryingCapacity": 123,
         },
         {
@@ -39,7 +39,7 @@ const commonsFixtures = {
             "milkPrice": 10,
             "degradationRate": .5,
             "showLeaderboard": true,
-            "scaleCowSalePrice": true,
+            "scaleCowSalePrice": false,
             "carryingCapacity": 42,
         }
     ],
