@@ -3,7 +3,7 @@ const systemInfoFixtures = {
     {
         "springH2ConsoleEnabled": true,
         "showSwaggerUILink": true,
-        "sourceRepo": "https://github.com/ucsb-cs156-f22/f22-5pm-happycows"
+        "sourceRepo": "https://github.com/ucsb-cs156-s23/proj-happycows-s23-6pm-4"
     },
     showingNeither:
     {
