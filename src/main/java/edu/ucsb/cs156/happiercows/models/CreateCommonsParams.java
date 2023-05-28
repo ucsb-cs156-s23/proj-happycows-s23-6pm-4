@@ -32,6 +32,8 @@ public class CreateCommonsParams {
   @DateTimeFormat
   private LocalDateTime startingDate;
   @Builder.Default
+  private Boolean scaleCowSalePrice = false; 
+  @Builder.Default
   private Boolean showLeaderboard = false; 
   @NumberFormat
   private int carryingCapacity;

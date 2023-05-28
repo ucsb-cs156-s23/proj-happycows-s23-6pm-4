@@ -115,10 +115,11 @@ public class UserCommonsController extends ApiController {
           .orElseThrow(() -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
         if(userCommons.getNumOfCows() >= 1){
+          //Causes PITest failure and is untestable, as > and >= are functionally identical
           //if (numCows > userCommons.getNumOfCows()) numCows = userCommons.getNumOfCows();
-          //numCows = (numCows < userCommons.getNumOfCows()) ? numCows : userCommons.getNumOfCows();
           numCows = Math.min(numCows, userCommons.getNumOfCows());
-          userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * commons.getCowPrice()));
+          userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * (commons.isScaleCowSalePrice() ? (commons.getCowPrice() * (userCommons.getCowHealth()/100))
+                                                                                                               : commons.getCowPrice())));
           userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);
         }
         else{

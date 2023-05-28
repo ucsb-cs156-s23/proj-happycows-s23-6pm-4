@@ -110,6 +110,7 @@ public class CommonsController extends ApiController {
     updated.setMilkPrice(params.getMilkPrice());
     updated.setStartingBalance(params.getStartingBalance());
     updated.setStartingDate(params.getStartingDate());
+    updated.setScaleCowSalePrice(params.getScaleCowSalePrice());
     updated.setShowLeaderboard(params.getShowLeaderboard());
     updated.setDegradationRate(params.getDegradationRate());
     updated.setCarryingCapacity(params.getCarryingCapacity());
@@ -140,7 +141,7 @@ public class CommonsController extends ApiController {
   @PostMapping(value = "/new", produces = "application/json")
   public ResponseEntity<String> createCommons(
 
-      @ApiParam("request body") @RequestBody CreateCommonsParams params) throws JsonProcessingException {
+    @ApiParam("request body") @RequestBody CreateCommonsParams params) throws JsonProcessingException {
     Commons commons = Commons.builder()
         .name(params.getName())
         .cowPrice(params.getCowPrice())
@@ -148,6 +149,7 @@ public class CommonsController extends ApiController {
         .startingBalance(params.getStartingBalance())
         .startingDate(params.getStartingDate())
         .degradationRate(params.getDegradationRate())
+        .scaleCowSalePrice(params.getScaleCowSalePrice())
         .showLeaderboard(params.getShowLeaderboard())
         .carryingCapacity(params.getCarryingCapacity())
         .build();
