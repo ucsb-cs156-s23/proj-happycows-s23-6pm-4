@@ -98,6 +98,7 @@ public class MilkTheCowsJobTests {
                 .startingDate(LocalDateTime.now())
                 .carryingCapacity(100)
                 .degradationRate(0.01)
+                .scaleMilkSalePrice(true)
                 .build();
 
         Commons commonsTemp[] = { testCommons };
@@ -126,7 +127,7 @@ public class MilkTheCowsJobTests {
     }
 
     @Test
-    void test_milk_cows() throws Exception {
+    void test_milk_cows_with_scaling() throws Exception {
 
         // Arrange
         Job jobStarted = Job.builder().build();
@@ -151,6 +152,7 @@ public class MilkTheCowsJobTests {
                 .startingDate(LocalDateTime.now())
                 .carryingCapacity(100)
                 .degradationRate(0.01)
+                .scaleMilkSalePrice(true)
                 .build();
 
         UserCommons updatedUserCommons = UserCommons
@@ -188,6 +190,70 @@ public class MilkTheCowsJobTests {
         assertEquals(expected, jobStarted.getLog());
     }
 
+    @Test
+    void test_milk_cows_no_scaling() throws Exception {
+
+        // Arrange
+        Job jobStarted = Job.builder().build();
+        JobContext ctx = new JobContext(null, jobStarted);
+
+        UserCommons origUserCommons = UserCommons
+                .builder()
+                .id(1L)
+                .userId(1L)
+                .commonsId(1L)
+                .totalWealth(300)
+                .numOfCows(1)
+                .cowHealth(10)
+                .build();
+
+        Commons testCommons = Commons
+                .builder()
+                .name("test commons")
+                .cowPrice(10)
+                .milkPrice(2)
+                .startingBalance(300)
+                .startingDate(LocalDateTime.now())
+                .carryingCapacity(100)
+                .degradationRate(0.01)
+                .scaleMilkSalePrice(false)
+                .build();
+
+        UserCommons updatedUserCommons = UserCommons
+                .builder()
+                .id(1L)
+                .userId(1L)
+                .commonsId(1L)
+                .totalWealth(302)
+                .numOfCows(1)
+                .cowHealth(10)
+                .build();
+
+        Commons commonsTemp[] = { testCommons };
+        UserCommons userCommonsTemp[] = { origUserCommons };
+        when(commonsRepository.findAll()).thenReturn(Arrays.asList(commonsTemp));
+        when(userCommonsRepository.findByCommonsId(testCommons.getId()))
+                .thenReturn(Arrays.asList(userCommonsTemp));
+        when(commonsRepository.getNumCows(testCommons.getId())).thenReturn(Optional.of(Integer.valueOf(1)));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userCommonsRepository.save(updatedUserCommons)).thenReturn(updatedUserCommons);
+
+
+        // Act
+        MilkTheCowsJob milkTheCowsJob = new MilkTheCowsJob(commonsRepository, userCommonsRepository,
+                userRepository, profitRepository);
+        milkTheCowsJob.milkCows(ctx, testCommons, origUserCommons);
+
+        // Assert
+
+        String expected = """
+                User: Chris Gaucho, numCows: 1, cowHealth: 10.0, totalWealth: $300.00
+                Profit for user: Chris Gaucho is: $2.00, newWealth: $302.00""";
+
+        verify(userCommonsRepository).save(updatedUserCommons);
+        assertEquals(expected, jobStarted.getLog());
+    }
+
 
     @Test
     void test_throws_exception_when_getting_user_fails() throws Exception {
@@ -216,6 +282,7 @@ public class MilkTheCowsJobTests {
                             .startingDate(LocalDateTime.now())
                             .carryingCapacity(100)
                             .degradationRate(0.01)
+                            .scaleMilkSalePrice(true)
                             .build();
 
             Commons commonsTemp[] = { testCommons };
@@ -267,6 +334,7 @@ public class MilkTheCowsJobTests {
                             .startingDate(LocalDateTime.now())
                             .carryingCapacity(100)
                             .degradationRate(0.01)
+                            .scaleMilkSalePrice(true)
                             .build();
 
             Commons commonsTemp[] = { testCommons };

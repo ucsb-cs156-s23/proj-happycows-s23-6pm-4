@@ -1,9 +1,8 @@
-import React from "react";
-import OurTable, {ButtonColumn} from "main/components/OurTable";
-import { useBackendMutation } from "main/utils/useBackend";
-import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/commonsUtils"
-import { useNavigate } from "react-router-dom";
+import OurTable, { ButtonColumn } from "main/components/OurTable";
+import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/commonsUtils";
 import { hasRole } from "main/utils/currentUser";
+import { useBackendMutation } from "main/utils/useBackend";
+import { useNavigate } from "react-router-dom";
 
 export default function CommonsTable({ commons, currentUser }) {
 
@@ -70,6 +69,11 @@ export default function CommonsTable({ commons, currentUser }) {
             Header:'Cow Sale Price Decreases with Health?',
             id: 'commons.scaleCowSalePrice', // needed for tests
             accessor: (row, _rowIndex) => String(row.commons.scaleCowSalePrice) // hack needed for boolean values to show up
+        },
+        {
+            Header:'Milk Sale Price Decreases with Health?',
+            id: 'commons.scaleMilkSalePrice', // needed for tests
+            accessor: (row, _rowIndex) => String(row.commons.scaleMilkSalePrice) // hack needed for boolean values to show up
         },
         {
             Header:'Show Leaderboard?',

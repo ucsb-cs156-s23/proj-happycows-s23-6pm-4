@@ -884,6 +884,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
             .milkPrice(2)
             .startingBalance(300)
             .startingDate(LocalDateTime.now())
+            .scaleMilkSalePrice(true)
             .scaleCowSalePrice(true)
             .build();
 

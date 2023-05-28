@@ -45,6 +45,25 @@ function CommonsForm({ initialCommons, submitAction, buttonLabel = "Create" }) {
       </Form.Group>
 
       <Form.Group className="mb-3">
+        <Form.Label htmlFor="startingDate">Starting Date</Form.Label>
+        <Form.Control
+          data-testid={`${testid}-startingDate`}
+          id="startingDate"
+          type="date"
+          isInvalid={!!errors.startingDate}
+          {...register("startingDate", {
+            valueAsDate: true,
+            validate: {
+              isPresent: (v) => !isNaN(v) || "Starting date is required",
+            },
+          })}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.startingDate?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
         <Form.Label htmlFor="startingBalance">Starting Balance</Form.Label>
         <Form.Control
           id="startingBalance"
@@ -102,21 +121,21 @@ function CommonsForm({ initialCommons, submitAction, buttonLabel = "Create" }) {
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="startingDate">Starting Date</Form.Label>
+        <Form.Label htmlFor="carryingCapacity">Carrying Capacity</Form.Label>
         <Form.Control
-          data-testid={`${testid}-startingDate`}
-          id="startingDate"
-          type="date"
-          isInvalid={!!errors.startingDate}
-          {...register("startingDate", {
-            valueAsDate: true,
-            validate: {
-              isPresent: (v) => !isNaN(v) || "Starting date is required",
-            },
+          data-testid={`${testid}-carryingCapacity`}
+          id="carryingCapacity"
+          type="number"
+          step="1"
+          isInvalid={!!errors.carryingCapacity}
+          {...register("carryingCapacity", {
+            valueAsNumber: true,
+            required: "Carrying capacity is required",
+            min: { value: 1, message: "Carrying Capacity must be greater than 0" },
           })}
         />
         <Form.Control.Feedback type="invalid">
-          {errors.startingDate?.message}
+          {errors.carryingCapacity?.message}
         </Form.Control.Feedback>
       </Form.Group>
 
@@ -140,31 +159,22 @@ function CommonsForm({ initialCommons, submitAction, buttonLabel = "Create" }) {
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="carryingCapacity">Carrying Capacity</Form.Label>
-        <Form.Control
-          data-testid={`${testid}-carryingCapacity`}
-          id="carryingCapacity"
-          type="number"
-          step="1"
-          isInvalid={!!errors.carryingCapacity}
-          {...register("carryingCapacity", {
-            valueAsNumber: true,
-            required: "Carrying capacity is required",
-            min: { value: 1, message: "Carrying Capacity must be greater than 0" },
-          })}
-        />
-        <Form.Control.Feedback type="invalid">
-          {errors.carryingCapacity?.message}
-        </Form.Control.Feedback>
-      </Form.Group>
-
-      <Form.Group className="mb-3">
         <Form.Label htmlFor="scaleCowSalePrice"> Cow Sale Price Decreases with Health?</Form.Label>
         <Form.Check 
           data-testid={`${testid}-scaleCowSalePrice`}
           type="checkbox"
           id="scaleCowSalePrice"
           {...register("scaleCowSalePrice")}
+        />
+      </Form.Group>
+      
+      <Form.Group className="mb-3">
+        <Form.Label htmlFor="scaleMilkSalePrice"> Milk Sale Price Decreases with Health?</Form.Label>
+        <Form.Check 
+          data-testid={`${testid}-scaleMilkSalePrice`}
+          type="checkbox"
+          id="scaleMilkSalePrice"
+          {...register("scaleMilkSalePrice")}
         />
       </Form.Group>
 

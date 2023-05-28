@@ -1,12 +1,12 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
 
-import AdminCreateCommonsPage from "main/pages/AdminCreateCommonsPage";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import AdminCreateCommonsPage from "main/pages/AdminCreateCommonsPage";
 
 const mockedNavigate = jest.fn();
 jest.mock('react-router-dom', () => {
@@ -61,6 +61,7 @@ describe("AdminCreateCommonsPage tests", () => {
             "startingDate": "2022-03-05T00:00:00",
             "degradationRate": 30.4,
             "carryingCapacity": 25,
+            "scaleMilkSalePrice": false,
             "scaleCowSalePrice": false,
             "showLeaderboard": false
         });
@@ -82,6 +83,7 @@ describe("AdminCreateCommonsPage tests", () => {
         const startDateField = screen.getByLabelText("Starting Date");
         const degradationRateField = screen.getByLabelText("Degradation Rate");
         const carryingCapacityField = screen.getByLabelText("Carrying Capacity");
+        const scaleMilkSalePriceField = screen.getByLabelText("Milk Sale Price Decreases with Health?");
         const scaleCowSalePriceField = screen.getByLabelText("Cow Sale Price Decreases with Health?");
         const showLeaderboardField = screen.getByLabelText("Show Leaderboard?");
         const button = screen.getByTestId("CommonsForm-Submit-Button");
@@ -93,6 +95,7 @@ describe("AdminCreateCommonsPage tests", () => {
         fireEvent.change(startDateField, { target: { value: '2022-03-05' } })
         fireEvent.change(degradationRateField, { target: { value: '30.4' } })
         fireEvent.change(carryingCapacityField, { target: { value: '25' } })
+        fireEvent.change(scaleMilkSalePriceField, { target: { value: true } })
         fireEvent.change(scaleCowSalePriceField, { target: { value: true } })
         fireEvent.change(showLeaderboardField, { target: { value: true } })
         fireEvent.click(button);
@@ -105,13 +108,14 @@ describe("AdminCreateCommonsPage tests", () => {
 
         const expectedCommons = {
             name: "My New Commons",
+            startingDate: '2022-03-05T00:00:00.000Z', // [1]
             startingBalance: 500,
             cowPrice: 10,
             milkPrice: 5,
-            startingDate: '2022-03-05T00:00:00.000Z', // [1]
-            degradationRate: 30.4,
             carryingCapacity: 25,
+            degradationRate: 30.4,
             scaleCowSalePrice: false,
+            scaleMilkSalePrice: false,
             showLeaderboard: false
         };
 

@@ -1,8 +1,7 @@
-import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import { useParams } from "react-router-dom";
 import CommonsForm from "main/components/Commons/CommonsForm";
-import { Navigate } from 'react-router-dom'
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
+import { Navigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function CommonsEditPage() {
@@ -37,6 +36,7 @@ export default function CommonsEditPage() {
         "degradationRate": commons.degradationRate,
         "carryingCapacity": commons.carryingCapacity,
         "scaleCowSalePrice": commons.scaleCowSalePrice,
+        "scaleMilkSalePrice": commons.scaleMilkSalePrice,
         "showLeaderboard": commons.showLeaderboard,
     }
   });

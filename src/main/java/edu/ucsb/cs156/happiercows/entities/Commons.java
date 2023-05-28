@@ -30,6 +30,7 @@ public class Commons
   private double startingBalance;
   private LocalDateTime startingDate;
   private double degradationRate;
+  private boolean scaleMilkSalePrice;
   private boolean scaleCowSalePrice;
   private boolean showLeaderboard;
   private int carryingCapacity;

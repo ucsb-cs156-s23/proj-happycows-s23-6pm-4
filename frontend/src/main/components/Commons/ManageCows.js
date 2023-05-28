@@ -1,6 +1,5 @@
-import React from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
-import cowHead from "./../../../assets/CowHead.png"; 
+import { Button, Card, Col, Row } from "react-bootstrap";
+import cowHead from "./../../../assets/CowHead.png";
 
 
 // add parameters
@@ -41,10 +40,14 @@ const ManageCows = ({userCommons, commons, onBuy, onSell}) =>  {
                         <br/>
                     </Col>
                 </Row>
+                {!!commons?.scaleMilkSalePrice &&
+                    <Card.Text>
+                    Note: Unhealthy cows don't produce as much milk!
+                    </Card.Text> 
+                }
                 {!!commons?.scaleCowSalePrice &&
                     <Card.Text>
-                    Note: Buying cows buys at current cow price, but selling cows sells at current cow price
-                    times the average health of cows as a percentage! 
+                    Note: Unhealthy cows can't be sold for full price!
                     </Card.Text> 
                 }
         </Card.Body>

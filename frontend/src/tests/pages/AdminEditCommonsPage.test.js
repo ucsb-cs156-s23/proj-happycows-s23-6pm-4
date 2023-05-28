@@ -1,12 +1,12 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
 
-import AdminEditCommonsPage from "main/pages/AdminEditCommonsPage";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import AdminEditCommonsPage from "main/pages/AdminEditCommonsPage";
 
 const mockToast = jest.fn();
 jest.mock('react-toastify', () => {
@@ -49,6 +49,7 @@ describe("AdminEditCommonsPage tests", () => {
                 "milkPrice": 10,
                 "degradationRate": 20.3,
                 "carryingCapacity": 100,
+                "scaleMilkSalePrice": false,
                 "scaleCowSalePrice": false,
                 "showLeaderboard": false
             });
@@ -61,6 +62,7 @@ describe("AdminEditCommonsPage tests", () => {
                 "milkPrice": 5,
                 "degradationRate": 40.3,
                 "carryingCapacity": 200,
+                "scaleMilkSalePrice": true,
                 "scaleCowSalePrice": true,
                 "showLeaderboard": true
             });
@@ -95,6 +97,7 @@ describe("AdminEditCommonsPage tests", () => {
             const startingDateField = screen.getByLabelText(/Starting Date/);
             const degradationRateField = screen.getByLabelText(/Degradation Rate/);
             const carryingCapacityField = screen.getByLabelText(/Carrying Capacity/);
+            const scaleMilkSalePriceField = screen.getByLabelText(/Milk Sale Price Decreases with Health\?/);
             const scaleCowSalePriceField = screen.getByLabelText(/Cow Sale Price Decreases with Health\?/);
             const showLeaderboardField = screen.getByLabelText(/Show Leaderboard\?/);
 
@@ -105,6 +108,7 @@ describe("AdminEditCommonsPage tests", () => {
             expect(milkPriceField).toHaveValue(10);
             expect(degradationRateField).toHaveValue(20.3);
             expect(carryingCapacityField).toHaveValue(100);
+            expect(scaleMilkSalePriceField).not.toBeChecked();
             expect(scaleCowSalePriceField).not.toBeChecked();
             expect(showLeaderboardField).not.toBeChecked();
         });
@@ -127,6 +131,7 @@ describe("AdminEditCommonsPage tests", () => {
             const startingDateField = screen.getByLabelText(/Starting Date/);
             const degradationRateField = screen.getByLabelText(/Degradation Rate/);
             const carryingCapacityField = screen.getByLabelText(/Carrying Capacity/);
+            const scaleMilkSalePriceField = screen.getByLabelText(/Milk Sale Price Decreases with Health\?/);
             const scaleCowSalePriceField = screen.getByLabelText(/Cow Sale Price Decreases with Health\?/);
             const showLeaderboardField = screen.getByLabelText(/Show Leaderboard\?/);
 
@@ -137,6 +142,7 @@ describe("AdminEditCommonsPage tests", () => {
             expect(milkPriceField).toHaveValue(10);
             expect(degradationRateField).toHaveValue(20.3);
             expect(carryingCapacityField).toHaveValue(100);
+            expect(scaleMilkSalePriceField).not.toBeChecked();
             expect(scaleCowSalePriceField).not.toBeChecked();
             expect(showLeaderboardField).not.toBeChecked();
 
@@ -151,6 +157,7 @@ describe("AdminEditCommonsPage tests", () => {
             fireEvent.change(milkPriceField, { target: { value: 5 } })
             fireEvent.change(degradationRateField, { target: { value: 40.3 } })
             fireEvent.change(carryingCapacityField, { target: { value: 200 } })
+            fireEvent.click(scaleMilkSalePriceField)
             fireEvent.click(scaleCowSalePriceField)
             fireEvent.click(showLeaderboardField)
 
@@ -171,6 +178,7 @@ describe("AdminEditCommonsPage tests", () => {
                 "degradationRate": 40.3,
                 "carryingCapacity": 200,
                 "scaleCowSalePrice": true,
+                "scaleMilkSalePrice": true,
                 "showLeaderboard": true
             })); // posted object
         });

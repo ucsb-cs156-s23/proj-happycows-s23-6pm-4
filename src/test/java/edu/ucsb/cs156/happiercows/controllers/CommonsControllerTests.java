@@ -73,6 +73,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(50.0)
+        .scaleMilkSalePrice(true)
         .scaleCowSalePrice(true)
         .showLeaderboard(true)
         .carryingCapacity(100)
@@ -85,6 +86,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(50.0)
+        .scaleMilkSalePrice(true)
         .scaleCowSalePrice(true)
         .showLeaderboard(true)
         .carryingCapacity(100)
@@ -232,6 +234,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(50.0)
+        .scaleMilkSalePrice(true)
         .scaleCowSalePrice(true)
         .showLeaderboard(true)
         .carryingCapacity(100)
@@ -244,6 +247,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(50.0)
+        .scaleMilkSalePrice(true)
         .scaleCowSalePrice(true)
         .showLeaderboard(true)
         .carryingCapacity(100)
@@ -267,6 +271,8 @@ public class CommonsControllerTests extends ControllerTestCase {
     commons.setMilkPrice(parameters.getMilkPrice());
     parameters.setDegradationRate(parameters.getDegradationRate() + 1.00);
     commons.setDegradationRate(parameters.getDegradationRate());
+    parameters.setScaleMilkSalePrice(true);
+    commons.setScaleMilkSalePrice(parameters.getScaleMilkSalePrice());
     parameters.setScaleCowSalePrice(true);
     commons.setScaleCowSalePrice(parameters.getScaleCowSalePrice());
     parameters.setShowLeaderboard(true);

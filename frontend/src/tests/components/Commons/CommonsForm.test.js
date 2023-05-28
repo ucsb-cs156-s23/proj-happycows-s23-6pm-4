@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
 import CommonsForm from "main/components/Commons/CommonsForm";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const mockedNavigate = jest.fn();
 
@@ -26,6 +26,8 @@ describe("CommonsForm tests", () => {
       /Starting Date/,
       /Degradation Rate/,
       /Carrying Capacity/,
+      /Milk Sale Price Decreases with Health\?/,
+      /Cow Sale Price Decreases with Health\?/,
       /Show Leaderboard\?/,
       
     ].forEach(

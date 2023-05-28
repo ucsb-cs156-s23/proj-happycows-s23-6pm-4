@@ -12,6 +12,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": true,
+            "scaleMilkSalePrice": true,
             "carryingCapacity": 100,
         },
         {
@@ -26,6 +27,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": false,
+            "scaleMilkSalePrice": false,
             "carryingCapacity": 123,
         },
         {
@@ -40,6 +42,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": false,
+            "scaleMilkSalePrice": false,
             "carryingCapacity": 42,
         }
     ],
@@ -57,6 +60,7 @@ const commonsFixtures = {
                 "degradationRate": .5,
                 "showLeaderboard": true,
                 "scaleCowSalePrice": true,
+                "scaleMilkSalePrice": true,
                 "carryingCapacity": 314,
             }
         ],
@@ -71,6 +75,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": true,
+            "scaleMilkSalePrice": true,
             "carryingCapacity": 100,
         },
         {
@@ -82,6 +87,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": true,
+            "scaleMilkSalePrice": true,
             "carryingCapacity": 100,
         },
         {
@@ -93,6 +99,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": true,
+            "scaleMilkSalePrice": true,
             "carryingCapacity": 100,
         },
         {
@@ -104,6 +111,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": true,
+            "scaleMilkSalePrice": true,
             "carryingCapacity": 100,
         },
         {
@@ -115,6 +123,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": true,
+            "scaleMilkSalePrice": true,
             "carryingCapacity": 100,
         },
         {
@@ -126,6 +135,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": true,
+            "scaleMilkSalePrice": true,
             "carryingCapacity": 100,
         },
         {
@@ -137,6 +147,7 @@ const commonsFixtures = {
             "degradationRate": .5,
             "showLeaderboard": true,
             "scaleCowSalePrice": true,
+            "scaleMilkSalePrice": true,
             "carryingCapacity": 100,
         }
     ],

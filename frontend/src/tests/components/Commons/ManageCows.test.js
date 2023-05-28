@@ -41,7 +41,7 @@ describe("ManageCows tests", () => {
         
     });
 
-    test("warning appears when cow sell price is scaled", async () => {
+    test("cow warning appears when cow sell price is scaled", async () => {
         const mockBuy = jest.fn();
         const mockSell = jest.fn();
 
@@ -49,10 +49,10 @@ describe("ManageCows tests", () => {
             <ManageCows userCommons = {userCommonsFixtures.oneRealUserCommons} commons = {commonsFixtures.threeCommons[0]} onBuy={mockBuy} onSell={mockSell} />
         );
 
-        expect(await screen.findByText(/Note: Buying cows buys at current cow price, but selling cows sells at current cow price times the average health of cows as a percentage!/)).toBeInTheDocument();
+        expect(await screen.findByText(/Note: Unhealthy cows can't be sold for full price!/)).toBeInTheDocument();
     });
 
-    test("warning is hidden when cow sell price is constant", async () => {
+    test("cow warning is hidden when cow sell price is constant", async () => {
         const mockBuy = jest.fn();
         const mockSell = jest.fn();
         
@@ -60,7 +60,29 @@ describe("ManageCows tests", () => {
             <ManageCows userCommons = {userCommonsFixtures.oneRealUserCommons} commons = {commonsFixtures.threeCommons[1]} onBuy={mockBuy} onSell={mockSell} />
         );
 
-        expect(screen.queryByText(/Note: Buying cows buys at current cow price, but selling cows sells at current cow price times the average health of cows as a percentage!/)).not.toBeInTheDocument();
+        expect(screen.queryByText(/Note: Unhealthy cows can't be sold for full price!/)).not.toBeInTheDocument();
+    });
+
+    test("milk warning appears when milk sell price is scaled", async () => {
+        const mockBuy = jest.fn();
+        const mockSell = jest.fn();
+
+        render(
+            <ManageCows userCommons = {userCommonsFixtures.oneRealUserCommons} commons = {commonsFixtures.threeCommons[0]} onBuy={mockBuy} onSell={mockSell} />
+        );
+
+        expect(await screen.findByText(/Note: Unhealthy cows don't produce as much milk!/)).toBeInTheDocument();
+    });
+
+    test("milk warning is hidden when milk sell price is constant", async () => {
+        const mockBuy = jest.fn();
+        const mockSell = jest.fn();
+        
+        render(
+            <ManageCows userCommons = {userCommonsFixtures.oneRealUserCommons} commons = {commonsFixtures.threeCommons[1]} onBuy={mockBuy} onSell={mockSell} />
+        );
+
+        expect(screen.queryByText(/Note: Unhealthy cows don't produce as much milk!/)).not.toBeInTheDocument();
     });
 
 });

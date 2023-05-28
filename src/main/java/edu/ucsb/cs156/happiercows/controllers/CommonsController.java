@@ -110,6 +110,7 @@ public class CommonsController extends ApiController {
     updated.setMilkPrice(params.getMilkPrice());
     updated.setStartingBalance(params.getStartingBalance());
     updated.setStartingDate(params.getStartingDate());
+    updated.setScaleMilkSalePrice(params.getScaleMilkSalePrice());
     updated.setScaleCowSalePrice(params.getScaleCowSalePrice());
     updated.setShowLeaderboard(params.getShowLeaderboard());
     updated.setDegradationRate(params.getDegradationRate());
@@ -149,6 +150,7 @@ public class CommonsController extends ApiController {
         .startingBalance(params.getStartingBalance())
         .startingDate(params.getStartingDate())
         .degradationRate(params.getDegradationRate())
+        .scaleMilkSalePrice(params.getScaleMilkSalePrice())
         .scaleCowSalePrice(params.getScaleCowSalePrice())
         .showLeaderboard(params.getShowLeaderboard())
         .carryingCapacity(params.getCarryingCapacity())
