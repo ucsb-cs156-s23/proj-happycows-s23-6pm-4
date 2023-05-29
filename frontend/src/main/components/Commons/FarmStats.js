@@ -24,6 +24,9 @@ const FarmStats = ({userCommons}) => {
             <Card.Text>
                 Total Cows Bought: {userCommons.totalCowsBought}
             </Card.Text>
+            <Card.Text>
+                Total Cows Sold: {userCommons.totalCowsSold}
+            </Card.Text>
         </Card.Body>
         </Card>
     ); 

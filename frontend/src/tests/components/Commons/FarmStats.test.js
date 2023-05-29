@@ -19,6 +19,8 @@ describe("FarmStats tests", () => {
         }); 
 
         expect(screen.getByText(/Cow Health: 98%/)).toBeInTheDocument();
+        expect(screen.getByText(/Total Cows Bought: 5/)).toBeInTheDocument();
+        expect(screen.getByText(/Total Cows Sold: 0/)).toBeInTheDocument();
 
     });
 });
