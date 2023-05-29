@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -99,14 +99,30 @@
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">40x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -118,6 +134,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -139,14 +167,16 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
 import cowHead from "./../../../assets/CowHead.png"; 
 &nbsp;
-// add parameters 
-const ManageCows = ({userCommons,commons, onBuy, onSell}) =&gt;  {
+&nbsp;
+// add parameters
+const ManageCows = ({userCommons, commons, onBuy, onSell}) =&gt;  {
     // update cowPrice from fixture
+    // Stryker disable ArithmeticOperator : line 24: not very important and unsure of how to test this
     return (
         &lt;Card&gt;
         &lt;Card.Header as="h5"&gt;Manage Cows&lt;/Card.Header&gt;
         &lt;Card.Body&gt;
-            {/* change $10 to info from fixture */}
+            {/* why does removing the optional chaining question mark turn the entire page white? */}
             &lt;Card.Title&gt;Market Cow Price: ${commons?.cowPrice}&lt;/Card.Title&gt;
             &lt;Card.Title&gt;Number of Cows: {userCommons.numOfCows}&lt;/Card.Title&gt;
                 &lt;Row&gt;
@@ -156,10 +186,22 @@ const ManageCows = ({userCommons,commons, onBuy, onSell}) =&gt;  {
                         &lt;/Card.Text&gt;
                     &lt;/Col&gt;
                     &lt;Col&gt;
-                        &lt;Button variant="outline-danger" onClick={()=&gt;{onBuy(userCommons)}} data-testid={"buy-cow-button"}&gt;Buy cow&lt;/Button&gt;
+                        &lt;Button variant="outline-danger" onClick={()=&gt;{onBuy(userCommons, parseInt(userCommons.totalWealth/commons.cowPrice))}} data-testid={"buy-max-cows-button"}&gt;Buy Max Cows&lt;/Button&gt;
                         &lt;br/&gt;
                         &lt;br/&gt;
-                        &lt;Button variant="outline-danger" onClick={()=&gt;{onSell(userCommons)}} data-testid={"sell-cow-button"}&gt;Sell cow&lt;/Button&gt;
+                        &lt;Button variant="outline-danger" onClick={()=&gt;{onBuy(userCommons, 10)}} data-testid={"buy-10-cows-button"}&gt;Buy 10 Cows&lt;/Button&gt;
+                        &lt;br/&gt;
+                        &lt;br/&gt;
+                        &lt;Button variant="outline-danger" onClick={()=&gt;{onBuy(userCommons, 1)}} data-testid={"buy-a-cow-button"}&gt;Buy a Cow&lt;/Button&gt;
+                        &lt;br/&gt;
+                        &lt;br/&gt;
+                        &lt;Button variant="outline-danger" onClick={()=&gt;{onSell(userCommons, 1)}} data-testid={"sell-a-cow-button"}&gt;Sell a Cow&lt;/Button&gt;
+                        &lt;br/&gt;
+                        &lt;br/&gt;
+                        &lt;Button variant="outline-danger" onClick={()=&gt;{onSell(userCommons, 10)}} data-testid={"sell-10-cows-button"}&gt;Sell 10 Cows&lt;/Button&gt;
+                        &lt;br/&gt;
+                        &lt;br/&gt;
+                        &lt;Button variant="outline-danger" onClick={()=&gt;{onSell(userCommons, userCommons.numOfCows)}} data-testid={"sell-all-cows-button"}&gt;Sell All Cows&lt;/Button&gt;
                         &lt;br/&gt;
                         &lt;br/&gt;
                     &lt;/Col&gt;
@@ -178,7 +220,7 @@ export default ManageCows; </pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun May 28 2023 15:41:23 GMT-0700 (Pacific Daylight Time)
+                at Sun May 28 2023 23:15:31 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
