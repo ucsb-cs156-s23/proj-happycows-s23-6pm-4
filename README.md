@@ -4,8 +4,8 @@
 
 | Type | Link       | 
 |------|------------|
-| prod | <https://proj-happycows.dokku-00.cs.ucsb.edu/> | 
-| qa | <https://proj-happycows-qa.dokku-00.cs.ucsb.edu/>  | 
+| prod | <https://proj-happycows.dokku-08.cs.ucsb.edu/> | 
+| qa | <https://proj-happycows-qa.dokku-08.cs.ucsb.edu/>  | 
 
 
 
