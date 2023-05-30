@@ -31,6 +31,7 @@ const AdminJobsPage = () => {
 
     const submitTestJob = async (data) => {
         console.log("submitTestJob, data=", data);
+        toast(`Created Test Job`);
         testJobMutation.mutate(data);
     }
 
