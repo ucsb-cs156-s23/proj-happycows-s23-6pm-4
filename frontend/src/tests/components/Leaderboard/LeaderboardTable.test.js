@@ -83,12 +83,59 @@ describe("LeaderboardTable tests", () => {
     expect(screen.getByTestId(`${testId}-cell-row-0-col-userId`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-username`)).toHaveTextContent("one");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-totalWealth`)).toHaveTextContent("1000");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-totalCowsBought`)).toHaveTextContent("8");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-totalCowsSold`)).toHaveTextContent("11");
+
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-userId`)).toHaveTextContent("2");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-username`)).toHaveTextContent("two");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-totalWealth`)).toHaveTextContent("1000");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-totalCowsBought`)).toHaveTextContent("5");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-totalCowsSold`)).toHaveTextContent("0");
     
 
+  });
+
+  test("Has the expected column headers and content for ordinary user", () => {
+    const currentUser = currentUserFixtures.userOnly;
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <LeaderboardTable leaderboardUsers={leaderboardFixtures.threeUserCommonsLB} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
+    );
+
+    const expectedHeaders = ['User Id', 'Username', 'Total Wealth', 'Cows Owned', 'Cow Health', 'Total Cows Bought', 'Total Cows Sold'];
+    const expectedFields = ['userId', 'username', 'totalWealth','numOfCows', 'cowHealth', 'totalCowsBought', 'totalCowsSold'];
+    const testId = "LeaderboardTable";
+
+    expectedHeaders.forEach((headerText) => {
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+
+    expectedFields.forEach((field) => {
+      const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(header).toBeInTheDocument();
+    });
+
+    const userCommonsIDHeader = screen.queryByText('(Admin) userCommons Id');
+    expect(userCommonsIDHeader).not.toBeInTheDocument();
+
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-userId`)).toHaveTextContent("1");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-username`)).toHaveTextContent("one");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-totalWealth`)).toHaveTextContent("1000");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-totalCowsBought`)).toHaveTextContent("8");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-totalCowsSold`)).toHaveTextContent("11");
+
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-userId`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-username`)).toHaveTextContent("two");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-totalWealth`)).toHaveTextContent("1000");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-totalCowsBought`)).toHaveTextContent("5");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-totalCowsSold`)).toHaveTextContent("0");
   });
 
 });
