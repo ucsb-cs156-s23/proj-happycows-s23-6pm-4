@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import Background from './../../assets/HomePageBackground.jpg';
+import Background from './../../assets/NewHomePageBackground1.jpg';
 
 const LoginCard = () => {
   return (
@@ -13,7 +13,7 @@ const LoginCard = () => {
       <Card.Body>
         <Card.Title data-testid="loginPage-cardTitle">Welcome to Happier Cows!</Card.Title>
         <Card.Text>
-          In order to start playing, please login.
+          Log in to play!
         </Card.Text>
         <Button href="/oauth2/authorization/google" variant="primary">Log In</Button>
       </Card.Body>
