@@ -114,7 +114,7 @@ public class UserCommonsController extends ApiController {
         UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
           .orElseThrow(() -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
-        if((userCommons.getNumOfCows()) >= 1 && (numCows >= 1)){
+        if((userCommons.getNumOfCows() >= 1) || (numCows >= 1)){
           numCows = Math.min(numCows, userCommons.getNumOfCows());
           userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * (commons.isScaleCowSalePrice() ? (commons.getCowPrice() * (userCommons.getCowHealth()/100))
                                                                                                                : commons.getCowPrice())));
