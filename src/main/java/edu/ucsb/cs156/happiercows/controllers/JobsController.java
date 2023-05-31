@@ -25,6 +25,8 @@ import edu.ucsb.cs156.happiercows.jobs.MilkTheCowsJobFactory;
 import edu.ucsb.cs156.happiercows.jobs.TestJob;
 import edu.ucsb.cs156.happiercows.jobs.UpdateCowHealthJob;
 import edu.ucsb.cs156.happiercows.jobs.UpdateCowHealthJobFactory;
+import edu.ucsb.cs156.happiercows.jobs.SetCowHealthJob;
+import edu.ucsb.cs156.happiercows.jobs.SetCowHealthJobFactory;
 import edu.ucsb.cs156.happiercows.repositories.jobs.JobsRepository;
 import edu.ucsb.cs156.happiercows.services.jobs.JobContextConsumer;
 import edu.ucsb.cs156.happiercows.services.jobs.JobService;
@@ -47,6 +49,9 @@ public class JobsController extends ApiController {
 
     @Autowired
     UpdateCowHealthJobFactory updateCowHealthJobFactory;
+
+    @Autowired
+    SetCowHealthJobFactory setCowHealthJobFactory;
 
     @Autowired
     MilkTheCowsJobFactory milkTheCowsJobFactory;
@@ -90,6 +95,16 @@ public class JobsController extends ApiController {
     ) { 
         JobContextConsumer updateCowHealthJob = updateCowHealthJobFactory.create();
         return jobService.runAsJob(updateCowHealthJob);
+    }
+
+    @ApiOperation(value = "Launch Job to Set Cow Health")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/launch/setcowhealth")
+    public Job setCowHealth(
+        @ApiParam("newcowhealth") @RequestParam Double newCowHealth
+    ) { 
+        JobContextConsumer setCowHealthJob = setCowHealthJobFactory.create(newCowHealth);
+        return jobService.runAsJob(setCowHealthJob);
     }
 
     @ApiOperation(value = "Launch Job to Produce Instructor Report")

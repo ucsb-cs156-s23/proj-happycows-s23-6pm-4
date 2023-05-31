@@ -41,6 +41,7 @@ import edu.ucsb.cs156.happiercows.repositories.jobs.JobsRepository;
 import edu.ucsb.cs156.happiercows.services.jobs.JobService;
 import edu.ucsb.cs156.happiercows.jobs.MilkTheCowsJobFactory;
 import edu.ucsb.cs156.happiercows.jobs.UpdateCowHealthJobFactory;
+import edu.ucsb.cs156.happiercows.jobs.SetCowHealthJobFactory;
 import edu.ucsb.cs156.happiercows.repositories.CommonsRepository;
 import edu.ucsb.cs156.happiercows.repositories.UserCommonsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -71,6 +72,9 @@ public class JobsControllerTests extends ControllerTestCase {
 
     @MockBean
     UpdateCowHealthJobFactory updateCowHealthJobFactory;
+
+    @MockBean
+    SetCowHealthJobFactory setCowHealthJobFactory;
 
     @MockBean
     MilkTheCowsJobFactory milkTheCowsJobFactory;
@@ -235,5 +239,18 @@ public class JobsControllerTests extends ControllerTestCase {
         assertNotNull(jobReturned.getStatus());
     }
 
+    @WithMockUser(roles = { "ADMIN" })
+    @Test
+    public void admin_can_launch_set_cow_health_job() throws Exception {
+        // act
+        MvcResult response = mockMvc.perform(post("/api/jobs/launch/setcowhealth?newcowhealth=20").with(csrf()))
+                .andExpect(status().isOk()).andReturn();
 
+        // assert
+        String responseString = response.getResponse().getContentAsString();
+        log.info("responseString={}", responseString);
+        Job jobReturned = objectMapper.readValue(responseString, Job.class);
+
+        assertNotNull(jobReturned.getStatus());
+    }
 }
