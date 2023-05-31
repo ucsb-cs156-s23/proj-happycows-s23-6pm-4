@@ -17,7 +17,6 @@ export default function CommonsOverview({ commons, currentUser }) {
                     <Col>
                         <Card.Title>Today is day {commons.day}! </Card.Title>
                         <Card.Text>Total Players: {commons.totalPlayers}</Card.Text>
-                        <Card.Text>Current milk price: ${commons.milkPrice}</Card.Text>
                     </Col>
                     <Col>
                         {showLeaderboard &&
