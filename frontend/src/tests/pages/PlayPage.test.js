@@ -1,14 +1,14 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
 
-import PlayPage from "main/pages/PlayPage";
+import commonsFixtures from "fixtures/commonsFixtures";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import userCommonsFixtures from "fixtures/userCommonsFixtures";
-import commonsFixtures from "fixtures/commonsFixtures";
+import PlayPage from "main/pages/PlayPage";
 
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -76,39 +76,6 @@ describe("PlayPage tests", () => {
         fireEvent.click(sellAllCowsButton);
         await waitFor(() => expect(axiosMock.history.put.length).toBe(6));
     });
-
-    // Not sure how to test this since I'm unable to call the onBuy and onSell functions from PlayPage
-/*  test("test buy and sell buttons work properly", async () => {
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <PlayPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-
-        const buyMaxButton = screen.getByTestId("buy-max-cows-button");
-        const buyTenButton = screen.getByTestId("buy-10-cows-button");
-        const buyOneButton = screen.getByTestId("buy-a-cow-button");
-        const sellOneButton = screen.getByTestId("sell-a-cow-button");
-        const sellTenButton = screen.getByTestId("sell-10-cows-button");
-        const sellAllButton = screen.getByTestId("sell-all-cows-button");
-        
-        fireEvent.click(buyMaxButton);
-        await waitFor( ()=>expect(onBuy).toContain(userCommonsFixtures.oneRealUserCommons, 50));
-        fireEvent.click(buyTenButton);
-        await waitFor( ()=>expect(onBuy).toHaveBeenCalled());
-        fireEvent.click(buyOneButton);
-        await waitFor( ()=>expect(onBuy).toHaveBeenCalled());
-        fireEvent.click(sellOneButton);
-        await waitFor( ()=>expect(onSell).toHaveBeenCalled());
-        fireEvent.click(sellTenButton);
-        await waitFor( ()=>expect(onSell).toHaveBeenCalled());
-        fireEvent.click(sellAllButton);
-        await waitFor( ()=>expect(onSell).toHaveBeenCalled());
-
-    });
-*/
     
     test("Make sure that both the Announcements and Welcome Farmer components show up", async () => {
         render(
