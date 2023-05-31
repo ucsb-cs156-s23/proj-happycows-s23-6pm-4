@@ -10,6 +10,8 @@ import InstructorReportForm from "main/components/Jobs/InstructorReportForm";
 
 import { useBackendMutation } from "main/utils/useBackend";
 
+import { toast } from "react-toastify";
+
 const AdminJobsPage = () => {
 
     const refreshJobsIntervalMilliseconds = 5000;
@@ -62,6 +64,7 @@ const AdminJobsPage = () => {
 
     const submitUpdateCowHealthJob = async () => {
         console.log("submitUpdateCowHealthJob")
+        toast(`Updating Cow Health!`);
         UpdateCowHealthMutation.mutate();
     }
 
@@ -82,6 +85,7 @@ const AdminJobsPage = () => {
 
     const submitMilkTheCowsJob = async () => {
         console.log("submitMilkTheCowsJob")
+        toast(`Milking The Cows!`);
         MilkTheCowsMutation.mutate();
     }
 
