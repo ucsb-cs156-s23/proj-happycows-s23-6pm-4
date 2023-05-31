@@ -76,7 +76,7 @@ public class UserCommonsController extends ApiController {
   @PutMapping("/buy")
   public ResponseEntity<String> putUserCommonsByIdBuy(
     @ApiParam("commonsId") @RequestParam Long commonsId,
-    @ApiParam("numCows") @RequestParam int numCows) // Want to set 1 as the default when nothing is passed in
+    @ApiParam("numCows") @RequestParam int numCows)
       throws NotEnoughMoneyException, JsonProcessingException{
         User u = getCurrentUser().getUser();
         Long userId = u.getId();
@@ -104,7 +104,7 @@ public class UserCommonsController extends ApiController {
   @PutMapping("/sell")
   public ResponseEntity<String> putUserCommonsByIdSell(
     @ApiParam("commonsId") @RequestParam Long commonsId,
-    @ApiParam("numCows") @RequestParam int numCows) // Want to set 1 as the default when nothing is passed in
+    @ApiParam("numCows") @RequestParam int numCows)
       throws NoCowsException, JsonProcessingException {
         User u = getCurrentUser().getUser();
         Long userId = u.getId();
@@ -114,9 +114,7 @@ public class UserCommonsController extends ApiController {
         UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
           .orElseThrow(() -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
-        if(userCommons.getNumOfCows() >= 1){
-          //if (numCows > userCommons.getNumOfCows()) numCows = userCommons.getNumOfCows();
-          //numCows = (numCows < userCommons.getNumOfCows()) ? numCows : userCommons.getNumOfCows();
+        if((userCommons.getNumOfCows()) >= 1 && (numCows >= 1)){
           numCows = Math.min(numCows, userCommons.getNumOfCows());
           userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * commons.getCowPrice()));
           userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);
