@@ -1,12 +1,5 @@
 package edu.ucsb.cs156.happiercows.controllers;
 
-import java.util.Optional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.util.*;
-import java.util.stream.*;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,7 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -87,27 +79,27 @@ public class UserCommonsController extends ApiController {
     return userCommons;
   }
 
-  @ApiOperation(value = "Update a user commons: cow health, number of cows, total wealth")
+  @ApiOperation(value = "Update a user commons")
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   @PutMapping("/update")
   public ResponseEntity<String> updateUserCommons(
-          @ApiParam("userId") @RequestParam Long userId,
-          @ApiParam("commonsId") @RequestParam Long commonsId,
-          @ApiParam("request body") @RequestBody CreateUserCommonsParams params) throws IllegalArgumentException, JsonProcessingException {
+          @ApiParam(name = "userId", type = "Long", value = "User ID", required = true) @RequestParam Long userId,
+          @ApiParam(name = "commonsId", type = "Long", value = "Commons ID", required = true) @RequestParam Long commonsId,
+          @ApiParam(name = "request body", type = "CreateUserCommonsParams", value = "User commons fields that need to be changed", required = true) @RequestBody CreateUserCommonsParams params) throws IllegalArgumentException, JsonProcessingException {
     
-          UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
-            .orElseThrow(
-                () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
+        UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
+          .orElseThrow(
+              () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
-          userCommons.setCowHealth(params.getCowHealth());
-          userCommons.setNumOfCows(params.getNumOfCows());
-          userCommons.setTotalWealth(params.getTotalWealth());
+        userCommons.setCowHealth(params.getCowHealth());
+        userCommons.setNumOfCows(params.getNumOfCows());
+        userCommons.setTotalWealth(params.getTotalWealth());
 
-      userCommonsRepository.save(userCommons);
+        userCommonsRepository.save(userCommons);
 
-      String body = mapper.writeValueAsString(userCommons);
+        String body = mapper.writeValueAsString(userCommons);
       
-      return ResponseEntity.ok().body(body);
+        return ResponseEntity.ok().body(body);
   }
 
   @ApiOperation(value = "Buy a cow, totalWealth updated")
