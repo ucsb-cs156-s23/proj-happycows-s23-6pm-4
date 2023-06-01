@@ -79,4 +79,18 @@ describe("CommonsOverview tests", () => {
         });
         expect(() => screen.getByTestId("user-leaderboard-button")).toThrow();
     });
+ 
+    test("contains the correct content", async () => {
+        render(
+            <CommonsOverview commons = {commonsFixtures.oneCommons[0]} />
+        );
+
+        await waitFor (() => {
+            expect(screen.getByText(/Today is day 5!/)).toBeInTheDocument();
+        }); 
+
+        expect(screen.getByText(/Total Players: 50/)).toBeInTheDocument();
+        expect(screen.getByText(/Current milk price: \$10/)).toBeInTheDocument();
+
+    });
 });
