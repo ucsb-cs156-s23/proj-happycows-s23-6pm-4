@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Card, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
+import { calculateDays } from "main/utils/dayUtils";
 
 export default function CommonsOverview({ commons, currentUser }) {
 
@@ -9,6 +10,10 @@ export default function CommonsOverview({ commons, currentUser }) {
     // Stryker disable next-line all
     const leaderboardButtonClick = () => { navigate("/leaderboard/" + commons.id) };
     const showLeaderboard = (hasRole(currentUser, "ROLE_ADMIN") || commons.showLeaderboard );
+
+    //const startingDate = commons.startingDate;
+    commons.day = calculateDays(commons.startingDate);
+
     return (
         <Card data-testid="CommonsOverview">
             <Card.Header as="h5">Announcements</Card.Header>
