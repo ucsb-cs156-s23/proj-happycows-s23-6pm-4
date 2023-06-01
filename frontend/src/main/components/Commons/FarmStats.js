@@ -5,7 +5,7 @@ import Cash from "./../../../assets/Cash.png";
 
 const FarmStats = ({userCommons}) => {
     return (
-        <Card>
+        <Card className="text-center">
         <Card.Header as="h5">Your Farm Stats</Card.Header>
         <Card.Body>
             {/* update total wealth and cow health with data from fixture */}
