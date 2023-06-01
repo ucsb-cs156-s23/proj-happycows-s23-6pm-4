@@ -1,6 +1,5 @@
-import React from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
-import cowHead from "./../../../assets/CowHead.png"; 
+import { Button, ButtonGroup, Card, Col, Row } from "react-bootstrap";
+import cowHead from "./../../../assets/CowHead.png";
 
 
 // add parameters
@@ -11,7 +10,6 @@ const ManageCows = ({userCommons, commons, onBuy, onSell}) =>  {
         <Card>
         <Card.Header as="h5">Manage Cows</Card.Header>
         <Card.Body>
-            {/* why does removing the optional chaining question mark turn the entire page white? */}
             <Card.Title>Market Cow Price: ${commons?.cowPrice}</Card.Title>
             <Card.Title>Number of Cows: {userCommons.numOfCows}</Card.Title>
                 <Row>
@@ -21,24 +19,14 @@ const ManageCows = ({userCommons, commons, onBuy, onSell}) =>  {
                         </Card.Text>
                     </Col>
                     <Col>
+                        <ButtonGroup vertical style={{margin: '10px'}}>
                         <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, parseInt(userCommons.totalWealth/commons.cowPrice))}} data-testid={"buy-max-cows-button"}>Buy Max Cows</Button>
-                        <br/>
-                        <br/>
                         <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, 10)}} data-testid={"buy-10-cows-button"}>Buy 10 Cows</Button>
-                        <br/>
-                        <br/>
                         <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, 1)}} data-testid={"buy-a-cow-button"}>Buy a Cow</Button>
-                        <br/>
-                        <br/>
                         <Button variant="outline-danger" onClick={()=>{onSell(userCommons, 1)}} data-testid={"sell-a-cow-button"}>Sell a Cow</Button>
-                        <br/>
-                        <br/>
                         <Button variant="outline-danger" onClick={()=>{onSell(userCommons, 10)}} data-testid={"sell-10-cows-button"}>Sell 10 Cows</Button>
-                        <br/>
-                        <br/>
                         <Button variant="outline-danger" onClick={()=>{onSell(userCommons, userCommons.numOfCows)}} data-testid={"sell-all-cows-button"}>Sell All Cows</Button>
-                        <br/>
-                        <br/>
+                        </ButtonGroup>
                     </Col>
                 </Row>
                     Note: Buying cows buys at current cow price, but selling cows sells at current cow price
