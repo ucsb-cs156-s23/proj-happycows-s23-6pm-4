@@ -17,7 +17,7 @@ example,edu.ucsb.cs156.happiercows.errors,NoCowsException,0,4,0,0,0,2,0,1,0,1
 example,edu.ucsb.cs156.happiercows.errors,NotEnoughMoneyException,0,4,0,0,0,2,0,1,0,1
 example,edu.ucsb.cs156.happiercows.errors,EntityNotFoundException,0,47,0,0,0,8,0,2,0,2
 example,edu.ucsb.cs156.happiercows.entities,User,0,16,0,0,0,1,0,1,0,1
-example,edu.ucsb.cs156.happiercows.controllers,UserCommonsController,0,258,0,8,0,40,0,16,0,12
+example,edu.ucsb.cs156.happiercows.controllers,UserCommonsController,0,261,0,10,0,40,0,17,0,12
 example,edu.ucsb.cs156.happiercows.controllers,CommonsController,0,403,0,8,0,92,0,20,0,16
 example,edu.ucsb.cs156.happiercows.controllers,UsersController,0,16,0,0,0,4,0,2,0,2
 example,edu.ucsb.cs156.happiercows.controllers,JobsController,0,53,0,0,0,15,0,7,0,7
