@@ -7,6 +7,7 @@ import edu.ucsb.cs156.happiercows.repositories.UserCommonsRepository;
 import edu.ucsb.cs156.happiercows.entities.Commons;
 import edu.ucsb.cs156.happiercows.entities.User;
 import edu.ucsb.cs156.happiercows.entities.UserCommons;
+import edu.ucsb.cs156.happiercows.models.CreateUserCommonsParams;
 import edu.ucsb.cs156.happiercows.errors.EntityNotFoundException;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -850,4 +851,95 @@ public class UserCommonsControllerTests extends ControllerTestCase {
   
       assertEquals(expectedJson, responseString);
     }
+
+    @WithMockUser(roles = { "ADMIN" })
+    @Test
+    public void test_updateUserCommons() throws Exception {
+
+        // arrange
+        CreateUserCommonsParams parameters = CreateUserCommonsParams.builder()
+            .cowHealth(100)
+            .numOfCows(1)
+            .totalWealth(400)
+            .build();
+
+        UserCommons userCommons = UserCommons.builder()
+            .id(1L)
+            .userId(1L)
+            .commonsId(1L)
+            .totalWealth(999)
+            .numOfCows(100)
+            .cowHealth(99)
+            .build();
+
+        UserCommons correctuserCommons = UserCommons
+            .builder()
+            .id(1L)
+            .userId(1L)
+            .commonsId(1L)
+            .totalWealth(400)
+            .numOfCows(1)
+            .cowHealth(100)
+            .build();
+
+        String requestBody = mapper.writeValueAsString(parameters);
+        String expectedReturn = mapper.writeValueAsString(correctuserCommons);
+    
+        when(userCommonsRepository.findByCommonsIdAndUserId(eq(1L), eq(1L))).thenReturn(Optional.of(userCommons));
+    
+        // act
+        MvcResult response = mockMvc.perform(put("/api/usercommons/update?commonsId=1&userId=1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .characterEncoding("utf-8")
+            .content(requestBody)
+            .with(csrf()))
+            .andExpect(status().isOk()).andReturn();
+    
+        // assert
+        verify(userCommonsRepository, times(1)).findByCommonsIdAndUserId(eq(1L), eq(1L));
+        verify(userCommonsRepository, times(1)).save(correctuserCommons);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedReturn, responseString);
+    }
+
+    @WithMockUser(roles = { "ADMIN" })
+    @Test
+    public void test_updateUserCommons_for_userCommons_DOES_NOT_exist() throws Exception {
+
+        // arrange
+        CreateUserCommonsParams parameters = CreateUserCommonsParams.builder()
+            .cowHealth(99)
+            .numOfCows(1)
+            .totalWealth(400)
+            .build();
+
+        UserCommons userCommons = UserCommons.builder()
+            .id(1L)
+            .userId(1L)
+            .commonsId(1L)
+            .totalWealth(999)
+            .numOfCows(100)
+            .cowHealth(99)
+            .build();
+
+        String requestBody = mapper.writeValueAsString(parameters);
+    
+        when(userCommonsRepository.findByCommonsIdAndUserId(eq(1L), eq(1L))).thenReturn(Optional.of(userCommons));
+    
+        // act
+        MvcResult response = mockMvc.perform(put("/api/usercommons/update?commonsId=999&userId=1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .characterEncoding("utf-8")
+            .content(requestBody)
+            .with(csrf()))
+            .andExpect(status().is(404)).andReturn();
+    
+        // assert
+        String responseString = response.getResponse().getContentAsString();
+        String expectedString = "{\"message\":\"UserCommons with commonsId 999 and userId 1 not found\",\"type\":\"EntityNotFoundException\"}";
+        Map<String, Object> expectedJson = mapper.readValue(expectedString, Map.class);
+        Map<String, Object> jsonResponse = responseToJson(response);
+        assertEquals(expectedJson, jsonResponse);
+    }
+
 }
