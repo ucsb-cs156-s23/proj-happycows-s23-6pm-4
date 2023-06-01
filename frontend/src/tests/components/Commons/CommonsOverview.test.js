@@ -1,15 +1,15 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
 
-import CommonsOverview from "main/components/Commons/CommonsOverview"; 
-import PlayPage from "main/pages/PlayPage";
-import commonsFixtures from "fixtures/commonsFixtures"; 
-import leaderboardFixtures from "fixtures/leaderboardFixtures";
+import commonsFixtures from "fixtures/commonsFixtures";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
+import leaderboardFixtures from "fixtures/leaderboardFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import CommonsOverview from "main/components/Commons/CommonsOverview";
+import PlayPage from "main/pages/PlayPage";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
