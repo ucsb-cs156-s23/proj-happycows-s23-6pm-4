@@ -81,23 +81,9 @@ describe("CommonsOverview tests", () => {
     });
  
     test("contains the correct content", async () => {
-
-        // arrange
-
-        jest.useFakeTimers().setSystemTime(new Date('2020-01-05'));
-
-        const commons = { 
-            ...commonsFixtures.oneCommons[0],
-            startingDate: new Date('2020-01-01'), 
-        };
-
-        // act
-
         render(
-            <CommonsOverview commons = {commons} />
+            <CommonsOverview commons = {commonsFixtures.oneCommons[0]} />
         );
-
-        // assert
 
         await waitFor (() => {
             expect(screen.getByText(/Today is day 5!/)).toBeInTheDocument();
