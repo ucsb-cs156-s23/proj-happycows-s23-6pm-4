@@ -3,6 +3,7 @@ import OurTable from "main/components/OurTable";
 
 export default function ProfitsTable({ profits }) {
     
+    
     // Stryker disable ArrayDeclaration : [columns] and [students] are performance optimization; mutation preserves correctness
     const memoizedColumns = React.useMemo(() => 
         [
@@ -24,6 +25,8 @@ export default function ProfitsTable({ profits }) {
             },
         ], 
     []);
+    //const memoizedDates = React.useMemo(() => profits.slice(0, 2), [profits]);
+    //before change
     const memoizedDates = React.useMemo(() => profits, [profits]);
     // Stryker enable ArrayDeclaration
 

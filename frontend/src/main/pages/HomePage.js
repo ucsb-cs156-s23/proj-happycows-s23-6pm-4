@@ -6,7 +6,7 @@ import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CommonsList from "main/components/Commons/CommonsList";
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { useCurrentUser } from "main/utils/currentUser";
-import Background from './../../assets/HomePageBackground.jpg';
+import Background from './../../assets/NewHomePageBackground1.jpg';
 
 export default function HomePage() {
   // Stryker disable next-line all
