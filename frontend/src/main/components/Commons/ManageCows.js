@@ -19,7 +19,7 @@ const ManageCows = ({userCommons, commons, onBuy, onSell}) =>  {
                         </Card.Text>
                     </Col>
                     <Col>
-                        <ButtonGroup vertical style={{margin: '10px'}}>
+                        <ButtonGroup vertical>
                         <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, parseInt(userCommons.totalWealth/commons.cowPrice))}} data-testid={"buy-max-cows-button"}>Buy Max Cows</Button>
                         <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, 10)}} data-testid={"buy-10-cows-button"}>Buy 10 Cows</Button>
                         <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, 1)}} data-testid={"buy-a-cow-button"}>Buy a Cow</Button>
