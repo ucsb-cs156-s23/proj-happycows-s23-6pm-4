@@ -33,6 +33,15 @@ public class SetCowHealthJob implements JobContextConsumer {
     public void accept(JobContext ctx) throws Exception {
         ctx.log("Updating cow health...");
 
+        if (newCowHealth < 0) {
+            ctx.log("Cow health can't be negative!");
+            return;
+        }
+        if (newCowHealth > 100) {
+            ctx.log("Cow health can't be more than 100!");
+            return;
+        }
+
         Iterable<Commons> allCommons = commonsRepository.findAll();
 
         for (Commons commons : allCommons) {
