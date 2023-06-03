@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Card, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
-import { calculateDays } from "main/utils/dayUtils";
+import { calculateDays } from "main/utils/dateUtils";
 
 export default function CommonsOverview({ commons, currentUser }) {
 
@@ -11,8 +11,8 @@ export default function CommonsOverview({ commons, currentUser }) {
     const leaderboardButtonClick = () => { navigate("/leaderboard/" + commons.id) };
     const showLeaderboard = (hasRole(currentUser, "ROLE_ADMIN") || commons.showLeaderboard );
 
-    //const startingDate = commons.startingDate;
-    commons.day = calculateDays(commons.startingDate);
+    const today = new Date();
+    commons.day = calculateDays(commons.startingDate,today);
 
     return (
         <Card data-testid="CommonsOverview">
