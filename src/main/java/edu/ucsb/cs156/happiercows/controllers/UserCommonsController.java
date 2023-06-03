@@ -130,7 +130,10 @@ public class UserCommonsController extends ApiController {
   @PreAuthorize("hasRole('ROLE_USER')")
   @PutMapping("/sell")
   public ResponseEntity<String> putUserCommonsByIdSell(
-          @ApiParam("commonsId") @RequestParam Long commonsId) throws NoCowsException, JsonProcessingException {
+        @ApiParam("commonsId") @RequestParam Long commonsId,
+        @ApiParam("numCows") @RequestParam int numCows)
+        throws NoCowsException, JsonProcessingException {
+
         User u = getCurrentUser().getUser();
         Long userId = u.getId();
 
@@ -141,9 +144,10 @@ public class UserCommonsController extends ApiController {
             () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
 
-        if(userCommons.getNumOfCows() >= 1 ){
-          userCommons.setTotalWealth(userCommons.getTotalWealth() + commons.getCowPrice());
-          userCommons.setNumOfCows(userCommons.getNumOfCows() - 1);
+        if((userCommons.getNumOfCows() >= 1) && (numCows >= 1)){
+          numCows = Math.min(numCows, userCommons.getNumOfCows());
+          userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * commons.getCowPrice()));
+          userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);
         }
         else{
           throw new NoCowsException("You have no cows to sell!");

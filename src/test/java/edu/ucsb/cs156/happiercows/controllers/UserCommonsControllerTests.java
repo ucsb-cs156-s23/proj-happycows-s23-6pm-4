@@ -307,7 +307,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .id(1L)
       .userId(1L)
       .commonsId(1L)
-      .totalWealth(300+testCommons.getCowPrice())
+      .totalWealth(310)
       .numOfCows(0)
       .cowHealth(100)
       .build();
@@ -319,7 +319,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
   
       // act
-      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=1")
+      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=1&numCows=1")
           .contentType(MediaType.APPLICATION_JSON)
                       .characterEncoding("utf-8")
                       .content(requestBody)
@@ -332,7 +332,73 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       String responseString = response.getResponse().getContentAsString();
       assertEquals(expectedReturn, responseString);
   }
+
+  @WithMockUser(roles = { "USER" })
+  @Test
+  public void test_SellCow_commons_exists_sell_multiple_cows() throws Exception {
   
+      // arrange
+  
+      UserCommons origUserCommons = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(300)
+      .numOfCows(5)
+      .cowHealth(100)
+      .build();
+  
+      Commons testCommons = Commons
+      .builder()
+      .name("test commons")
+      .cowPrice(10)
+      .milkPrice(2)
+      .startingBalance(300)
+      .startingDate(LocalDateTime.now())
+      .build();
+  
+      UserCommons userCommonsToSend = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(300)
+      .numOfCows(5)
+      .cowHealth(100)
+      .build();
+  
+      UserCommons correctuserCommons = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(330)
+      .numOfCows(2)
+      .cowHealth(100)
+      .build();
+  
+      String requestBody = mapper.writeValueAsString(userCommonsToSend);
+      String expectedReturn = mapper.writeValueAsString(correctuserCommons);
+  
+      when(userCommonsRepository.findByCommonsIdAndUserId(eq(1L), eq(1L))).thenReturn(Optional.of(origUserCommons));
+      when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
+  
+      // act
+      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=1&numCows=3")
+          .contentType(MediaType.APPLICATION_JSON)
+                      .characterEncoding("utf-8")
+                      .content(requestBody)
+                      .with(csrf()))
+              .andExpect(status().isOk()).andReturn();
+  
+      // assert
+      verify(userCommonsRepository, times(1)).findByCommonsIdAndUserId(eq(1L), eq(1L));
+      verify(userCommonsRepository, times(1)).save(correctuserCommons);
+      String responseString = response.getResponse().getContentAsString();
+      assertEquals(expectedReturn, responseString);
+  }
+
   @WithMockUser(roles = { "USER" })
   @Test
   public void test_BuyCow_commons_for_user_DOES_NOT_exist() throws Exception {
@@ -454,7 +520,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       when(commonsRepository.findById(eq(234L))).thenReturn(Optional.of(testCommons));
   
       // act
-      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=234")
+      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=234&numCows=1")
           .contentType(MediaType.APPLICATION_JSON)
                       .characterEncoding("utf-8")
                       .content(requestBody)
@@ -523,7 +589,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
   
       // act
-      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=222")
+      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=222&numCows=1")
           .contentType(MediaType.APPLICATION_JSON)
                       .characterEncoding("utf-8")
                       .content(requestBody)
@@ -729,7 +795,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
   
       // act
-      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=1")
+      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=1&numCows=1")
           .contentType(MediaType.APPLICATION_JSON)
                       .characterEncoding("utf-8")
                       .content(requestBody)
@@ -745,7 +811,73 @@ public class UserCommonsControllerTests extends ControllerTestCase {
     
     }
 
+    @WithMockUser(roles = { "USER" })
+  @Test
+  public void test_SellCow_commons_exists_sell_zero_cows() throws Exception {
+  
+      // arrange
+  
+      UserCommons origUserCommons = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(300)
+      .numOfCows(1)
+      .cowHealth(100)
+      .build();
+  
+      Commons testCommons = Commons
+      .builder()
+      .name("test commons")
+      .cowPrice(10)
+      .milkPrice(2)
+      .startingBalance(300)
+      .startingDate(LocalDateTime.now())
+      .build();
+  
+      UserCommons userCommonsToSend = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(300)
+      .numOfCows(1)
+      .cowHealth(100)
+      .build();
+  
+      UserCommons correctuserCommons = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(300)
+      .numOfCows(1)
+      .cowHealth(100)
+      .build();
+  
+      String requestBody = mapper.writeValueAsString(userCommonsToSend);
+      String expectedReturn = mapper.writeValueAsString(correctuserCommons);
+  
+      when(userCommonsRepository.findByCommonsIdAndUserId(eq(1L), eq(1L))).thenReturn(Optional.of(origUserCommons));
+      when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
+  
+      // act
+      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=1&numCows=0")
+          .contentType(MediaType.APPLICATION_JSON)
+                      .characterEncoding("utf-8")
+                      .content(requestBody)
+                      .with(csrf())).andExpect(status().is(400)).andReturn();
 
+
+      // assert
+      String responseString = response.getResponse().getContentAsString();
+      String expectedString = "{\"message\":\"You have no cows to sell!\",\"type\":\"NoCowsException\"}";
+      Map<String, Object> expectedJson = mapper.readValue(expectedString, Map.class);
+      Map<String, Object> jsonResponse = responseToJson(response);
+      assertEquals(expectedJson, jsonResponse);
+    
+    }
 
     @WithMockUser(roles = { "USER" })
     @Test
