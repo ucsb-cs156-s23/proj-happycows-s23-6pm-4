@@ -1,16 +1,15 @@
-import React from "react";
-import { Container, CardGroup } from "react-bootstrap";
+import { CardGroup, Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CommonsOverview from "main/components/Commons/CommonsOverview";
 import CommonsPlay from "main/components/Commons/CommonsPlay";
 import FarmStats from "main/components/Commons/FarmStats";
 import ManageCows from "main/components/Commons/ManageCows";
 import Profits from "main/components/Commons/Profits";
-import { useBackend, useBackendMutation } from "main/utils/useBackend";
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useCurrentUser } from "main/utils/currentUser";
+import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import Background from "../../assets/PlayPageBackground.png";
 
 export default function PlayPage() {
@@ -30,7 +29,7 @@ export default function PlayPage() {
         }
       }
     );
-  // Stryker enable all 
+  // Stryker restore all 
 
   // Stryker disable all 
   const { data: commons } =
@@ -44,7 +43,7 @@ export default function PlayPage() {
         }
       }
     );
-  // Stryker enable all 
+  // Stryker restore all 
 
   // Stryker disable all 
   const { data: userCommonsProfits } =
@@ -58,7 +57,7 @@ export default function PlayPage() {
         }
       }
     );
-  // Stryker enable all 
+  // Stryker restore all 
 
   const onSuccessBuy = () => {
     toast(`Cows bought!`);
@@ -108,7 +107,9 @@ export default function PlayPage() {
 
 
   return (
-    <div style={{ backgroundSize: 'cover', backgroundImage: `url(${Background})` }}>
+    <div style={
+      // Stryker disable next-line all : no need to unit test CSS
+      { backgroundSize: 'cover', backgroundImage: `url(${Background})` }}>
       <BasicLayout >
         <Container >
           {!!currentUser && <CommonsPlay currentUser={currentUser} />}

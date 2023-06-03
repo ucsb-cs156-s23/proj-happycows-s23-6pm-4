@@ -5,7 +5,6 @@ import cowHead from "./../../../assets/CowHead.png";
 // add parameters
 const ManageCows = ({userCommons, commons, onBuy, onSell}) =>  {
     // update cowPrice from fixture
-    // Stryker disable ArithmeticOperator : line 24: not very important and unsure of how to test this
     return (
         <Card>
         <Card.Header as="h5">Manage Cows</Card.Header>
