@@ -26,7 +26,7 @@ public class SetCowHealthJob implements JobContextConsumer {
     private UserCommonsRepository userCommonsRepository;
     @Getter
     private UserRepository userRepository;
-
+    @Getter
     private double newCowHealth;
 
     @Override

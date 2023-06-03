@@ -101,7 +101,7 @@ public class JobsController extends ApiController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/launch/setcowhealth")
     public Job setCowHealth(
-        @ApiParam("newcowhealth") @RequestParam Double newCowHealth
+        @ApiParam("newcowhealth") @RequestParam double newCowHealth
     ) { 
         JobContextConsumer setCowHealthJob = setCowHealthJobFactory.create(newCowHealth);
         return jobService.runAsJob(setCowHealthJob);
