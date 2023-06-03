@@ -20,7 +20,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 1000,
             "cowHealth": 98.0,
-            "numOfCows": 5
+            "numOfCows": 5,
+            "totalCowsBought": 100,
+            "totalCowsSold": 8
         }
     ],
     threeUserCommons:
@@ -44,7 +46,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 1000,
             "cowHealth": 93.0,
-            "numOfCows": 8
+            "numOfCows": 8,
+            "totalCowsBought": 100,
+            "totalCowsSold": 8
         },
         {
             "id":2,
@@ -65,7 +69,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 1000,
             "cowHealth": 98.0,
-            "numOfCows": 5
+            "numOfCows": 5,
+            "totalCowsBought": 200,
+            "totalCowsSold": 55
         },
         {
             "id":3,
@@ -86,7 +92,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 100000,
             "cowHealth": 2.0,
-            "numOfCows": 1000
+            "numOfCows": 1000,
+            "totalCowsBought": 300,
+            "totalCowsSold": 78
         }
     ],
     fiveUserCommons: 
@@ -110,7 +118,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 1000,
             "cowHealth": 93.0,
-            "numOfCows": 8
+            "numOfCows": 8,
+            "totalCowsBought": 100,
+            "totalCowsSold": 8
         },
         {
             "id":2,
@@ -131,7 +141,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 1000,
             "cowHealth": 98.0,
-            "numOfCows": 5
+            "numOfCows": 5,
+            "totalCowsBought": 200,
+            "totalCowsSold": 55
         },
         {
             "id":3,
@@ -152,7 +164,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 100000,
             "cowHealth": 2.0,
-            "numOfCows": 1000
+            "numOfCows": 1000,
+            "totalCowsBought": 300,
+            "totalCowsSold": 78
         },
         {
             "id":4,
@@ -173,7 +187,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 50,
             "cowHealth": 84.0,
-            "numOfCows": 100
+            "numOfCows": 100,
+            "totalCowsBought": 200,
+            "totalCowsSold": 4
         },
         {
             "id":5,
@@ -194,7 +210,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 800,
             "cowHealth": 72.0,
-            "numOfCows": 60
+            "numOfCows": 60,
+            "totalCowsBought": 89,
+            "totalCowsSold": 55
         }
     ],
     tenUserCommons: 
@@ -218,7 +236,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 1000,
             "cowHealth": 93.0,
-            "numOfCows": 8
+            "numOfCows": 8,
+            "totalCowsBought": 100,
+            "totalCowsSold": 8
         },
         {
             "id":2,
@@ -239,7 +259,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 1000,
             "cowHealth": 98.0,
-            "numOfCows": 5
+            "numOfCows": 5,
+            "totalCowsBought": 200,
+            "totalCowsSold": 55
         },
         {
             "id":3,
@@ -260,7 +282,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 100000,
             "cowHealth": 2.0,
-            "numOfCows": 1000
+            "numOfCows": 1000,
+            "totalCowsBought": 300,
+            "totalCowsSold": 78
         },
         {
             "id":4,
@@ -281,7 +305,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 50,
             "cowHealth": 84.0,
-            "numOfCows": 100
+            "numOfCows": 100,
+            "totalCowsBought": 200,
+            "totalCowsSold": 4
         },
         {
             "id":5,
@@ -302,7 +328,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 800,
             "cowHealth": 72.0,
-            "numOfCows": 60
+            "numOfCows": 60,
+            "totalCowsBought": 89,
+            "totalCowsSold": 55
         },
         {
             "id":6,
@@ -323,7 +351,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 1000,
             "cowHealth": 93.0,
-            "numOfCows": 8
+            "numOfCows": 8,
+            "totalCowsBought": 10,
+            "totalCowsSold": 1
         },
         {
             "id":7,
@@ -344,7 +374,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 1000,
             "cowHealth": 98.0,
-            "numOfCows": 5
+            "numOfCows": 5,
+            "totalCowsBought": 89,
+            "totalCowsSold": 99
         },
         {
             "id":8,
@@ -365,7 +397,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 100000,
             "cowHealth": 2.0,
-            "numOfCows": 1000
+            "numOfCows": 1000,
+            "totalCowsBought": 1500,
+            "totalCowsSold": 55
         },
         {
             "id":9,
@@ -386,7 +420,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 50,
             "cowHealth": 84.0,
-            "numOfCows": 100
+            "numOfCows": 100,
+            "totalCowsBought": 201,
+            "totalCowsSold": 55
         },
         {
             "id":10,
@@ -407,7 +443,9 @@ const userCommonsFixtures = {
             },
             "totalWealth" : 800,
             "cowHealth": 72.0,
-            "numOfCows": 60
+            "numOfCows": 60,
+            "totalCowsBought": 100,
+            "totalCowsSold": 31
         }
     ]
 }
