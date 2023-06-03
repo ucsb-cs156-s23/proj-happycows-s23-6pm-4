@@ -115,9 +115,16 @@ public class UserCommonsController extends ApiController {
         .orElseThrow(
             () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
+<<<<<<< HEAD
           if((numCows > 0) && (userCommons.getTotalWealth() >= (numCows * commons.getCowPrice()))){
             userCommons.setTotalWealth(userCommons.getTotalWealth() - (numCows * commons.getCowPrice()));
             userCommons.setNumOfCows(userCommons.getNumOfCows() + numCows);
+=======
+        if(userCommons.getTotalWealth() >= commons.getCowPrice() ){
+          userCommons.setTotalWealth(userCommons.getTotalWealth() - commons.getCowPrice());
+          userCommons.setNumOfCows(userCommons.getNumOfCows() + 1);
+          userCommons.setTotalCowsBought(userCommons.getTotalCowsBought() + 1);
+>>>>>>> e03032ed (yk - updated UserCommonsController for total cows bought and sold)
         }
         else{
           throw new NotEnoughMoneyException("You need more money!");
@@ -146,10 +153,17 @@ public class UserCommonsController extends ApiController {
             () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
 
+<<<<<<< HEAD
         if((userCommons.getNumOfCows() >= 1) && (numCows >= 1)){
           numCows = Math.min(numCows, userCommons.getNumOfCows());
           userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * commons.getCowPrice()));
           userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);
+=======
+        if(userCommons.getNumOfCows() >= 1 ){
+          userCommons.setTotalWealth(userCommons.getTotalWealth() + commons.getCowPrice());
+          userCommons.setNumOfCows(userCommons.getNumOfCows() - 1);
+          userCommons.setTotalCowsSold(userCommons.getTotalCowsSold() + 1);
+>>>>>>> e03032ed (yk - updated UserCommonsController for total cows bought and sold)
         }
         else{
           throw new NoCowsException("You have no cows to sell!");
