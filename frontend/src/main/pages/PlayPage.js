@@ -1,16 +1,15 @@
-import React from "react";
-import { Container, CardGroup } from "react-bootstrap";
+import { CardGroup, Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CommonsOverview from "main/components/Commons/CommonsOverview";
 import CommonsPlay from "main/components/Commons/CommonsPlay";
 import FarmStats from "main/components/Commons/FarmStats";
 import ManageCows from "main/components/Commons/ManageCows";
 import Profits from "main/components/Commons/Profits";
-import { useBackend, useBackendMutation } from "main/utils/useBackend";
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useCurrentUser } from "main/utils/currentUser";
+import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import Background from "../../assets/PlayPageBackground.png";
 
 export default function PlayPage() {
@@ -30,7 +29,7 @@ export default function PlayPage() {
         }
       }
     );
-  // Stryker enable all 
+  // Stryker restore all 
 
 
   // Stryker disable all 
@@ -45,7 +44,7 @@ export default function PlayPage() {
         }
       }
     );
-  // Stryker enable all 
+  // Stryker restore all 
 
   // Stryker disable all 
   const { data: userCommonsProfits } =
@@ -59,7 +58,7 @@ export default function PlayPage() {
         }
       }
     );
-  // Stryker enable all 
+  // Stryker restore all 
 
 
   const onSuccessBuy = () => {
@@ -83,7 +82,7 @@ export default function PlayPage() {
     // Stryker disable next-line all : hard to set up test for caching
     [`/api/usercommons/forcurrentuser?commonsId=${commonsId}`]
   );
-  // Stryker enable all 
+  // Stryker restore all 
 
 
   const onBuy = (userCommons) => {
@@ -104,7 +103,7 @@ export default function PlayPage() {
       commonsId: commonsId
     }
   });
-  // Stryker enable all 
+  // Stryker restore all 
 
 
   // Stryker disable all 
@@ -113,7 +112,7 @@ export default function PlayPage() {
     { onSuccess: onSuccessSell },
     [`/api/usercommons/forcurrentuser?commonsId=${commonsId}`]
   );
-  // Stryker enable all 
+  // Stryker restore all 
 
 
   const onSell = (userCommons) => {
