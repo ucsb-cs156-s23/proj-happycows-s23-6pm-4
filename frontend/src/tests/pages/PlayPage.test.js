@@ -111,7 +111,7 @@ describe("PlayPage tests", () => {
 
     });
 
-    test("Test accessing the backend for userCommonsProfits", async () => {
+    test("render profits table", async () => {
         axiosMock.onGet("/api/profits/all/commonsid", { params: { commonsId: 1} }).reply(200, [{
             "id": 1,
             "userCommons": {
@@ -146,7 +146,7 @@ describe("PlayPage tests", () => {
 
     });
 
-    test("Make sure CommonsPlay, CommonsOverview, ManageCows, FarmStats, and Profits show up", async () => {        
+    test("Make sure CommonsPlay, CommonsOverview, ManageCows, FarmStats, and Profits show up", async () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
