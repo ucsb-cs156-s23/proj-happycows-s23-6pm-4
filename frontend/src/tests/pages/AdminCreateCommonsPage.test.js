@@ -1,12 +1,12 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
 
-import AdminCreateCommonsPage from "main/pages/AdminCreateCommonsPage";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import AdminCreateCommonsPage from "main/pages/AdminCreateCommonsPage";
 
 const mockedNavigate = jest.fn();
 jest.mock('react-router-dom', () => {
@@ -61,6 +61,7 @@ describe("AdminCreateCommonsPage tests", () => {
             "startingDate": "2022-03-05T00:00:00",
             "degradationRate": 30.4,
             "carryingCapacity": 25,
+            "scaleCowSalePrice": false,
             "showLeaderboard": false
         });
 
@@ -81,6 +82,7 @@ describe("AdminCreateCommonsPage tests", () => {
         const startDateField = screen.getByLabelText("Starting Date");
         const degradationRateField = screen.getByLabelText("Degradation Rate");
         const carryingCapacityField = screen.getByLabelText("Carrying Capacity");
+        const scaleCowSalePrice = screen.getByLabelText("Decrease Sale Price of Unhealthy Cows?");
         const showLeaderboardField = screen.getByLabelText("Show Leaderboard?");
         const button = screen.getByTestId("CommonsForm-Submit-Button");
 
@@ -91,7 +93,8 @@ describe("AdminCreateCommonsPage tests", () => {
         fireEvent.change(startDateField, { target: { value: '2022-03-05' } })
         fireEvent.change(degradationRateField, { target: { value: '30.4' } })
         fireEvent.change(carryingCapacityField, { target: { value: '25' } })
-        fireEvent.change(showLeaderboardField, { target: { value: true } })
+        fireEvent.click(scaleCowSalePrice)
+        fireEvent.click(showLeaderboardField)
         fireEvent.click(button);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
@@ -108,7 +111,8 @@ describe("AdminCreateCommonsPage tests", () => {
             startingDate: '2022-03-05T00:00:00.000Z', // [1]
             degradationRate: 30.4,
             carryingCapacity: 25,
-            showLeaderboard: false
+            scaleCowSalePrice: true,
+            showLeaderboard: true
         };
 
         expect(axiosMock.history.post[0].data).toEqual( JSON.stringify(expectedCommons) );
