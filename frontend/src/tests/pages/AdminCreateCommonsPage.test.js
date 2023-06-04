@@ -8,13 +8,13 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import AdminCreateCommonsPage from "main/pages/AdminCreateCommonsPage";
 
-const mockedNavigate = jest.fn();
+const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => {
     const originalModule = jest.requireActual('react-router-dom');
     return {
         __esModule: true,
         ...originalModule,
-        Navigate: (x) => { mockedNavigate(x); return null; }
+        Navigate: (x) => { mockNavigate(x); return null; }
     };
 });
 
@@ -61,8 +61,8 @@ describe("AdminCreateCommonsPage tests", () => {
             "startingDate": "2022-03-05T00:00:00",
             "degradationRate": 30.4,
             "carryingCapacity": 25,
-            "scaleCowSalePrice": false,
-            "showLeaderboard": false
+            "scaleCowSalePrice": true,
+            "showLeaderboard": true
         });
 
         render(
@@ -117,6 +117,7 @@ describe("AdminCreateCommonsPage tests", () => {
 
         expect(axiosMock.history.post[0].data).toEqual( JSON.stringify(expectedCommons) );
 
+        expect(mockNavigate).toBeCalledWith({ "to": "/" });
         expect(mockToast).toBeCalledWith(<div>Commons successfully created!
             <br />id: 5
             <br />name: My New Commons
