@@ -146,7 +146,7 @@ describe("PlayPage tests", () => {
 
     });
 
-    test("Make sure CommonsPlay, CommonsOverview, ManageCows, FarmStats, and Profits show up", async () => {        
+    test("Make sure CommonsPlay, CommonsOverview, ManageCows, FarmStats, and Profits show up", async () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
