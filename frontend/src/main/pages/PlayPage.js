@@ -17,11 +17,11 @@ export default function PlayPage() {
   const { commonsId } = useParams();
   const { data: currentUser } = useCurrentUser();
 
-  // Stryker disable all 
   const { data: userCommons } =
     useBackend(
+      // Stryker disable next-line all : don't test internal caching of React Query
       [`/api/usercommons/forcurrentuser?commonsId=${commonsId}`],
-      {
+      { // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
         method: "GET",
         url: "/api/usercommons/forcurrentuser",
         params: {
@@ -29,14 +29,12 @@ export default function PlayPage() {
         }
       }
     );
-  // Stryker restore all 
 
-
-  // Stryker disable all 
   const { data: commons } =
     useBackend(
+      // Stryker disable next-line all : don't test internal caching of React Query
       [`/api/commons?id=${commonsId}`],
-      {
+      { // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
         method: "GET",
         url: "/api/commons",
         params: {
@@ -44,13 +42,12 @@ export default function PlayPage() {
         }
       }
     );
-  // Stryker restore all 
 
-  // Stryker disable all 
   const { data: userCommonsProfits } =
     useBackend(
+      // Stryker disable next-line all : don't test internal caching of React Query
       [`/api/profits/all/commonsid?commonsId=${commonsId}`],
-      {
+      { // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
         method: "GET",
         url: "/api/profits/all/commonsid",
         params: {
@@ -58,8 +55,6 @@ export default function PlayPage() {
         }
       }
     );
-  // Stryker restore all 
-
 
   const onSuccessBuy = () => {
     toast(`Cow bought!`);
@@ -75,27 +70,21 @@ export default function PlayPage() {
     }
   });
 
-
-  // Stryker disable all 
   const mutationbuy = useBackendMutation(
     objectToAxiosParamsBuy,
     { onSuccess: onSuccessBuy },
     // Stryker disable next-line all : hard to set up test for caching
     [`/api/usercommons/forcurrentuser?commonsId=${commonsId}`]
   );
-  // Stryker restore all 
-
 
   const onBuy = (userCommons) => {
     mutationbuy.mutate(userCommons)
   };
 
-
   const onSuccessSell = () => {
     toast(`Cow sold!`);
   }
 
-  // Stryker disable all 
   const objectToAxiosParamsSell = (newUserCommons) => ({
     url: "/api/usercommons/sell",
     method: "PUT",
@@ -104,24 +93,22 @@ export default function PlayPage() {
       commonsId: commonsId
     }
   });
-  // Stryker restore all 
 
-
-  // Stryker disable all 
   const mutationsell = useBackendMutation(
     objectToAxiosParamsSell,
     { onSuccess: onSuccessSell },
+    // Stryker disable next-line all : hard to set up test for caching
     [`/api/usercommons/forcurrentuser?commonsId=${commonsId}`]
   );
-  // Stryker restore all 
-
 
   const onSell = (userCommons) => {
     mutationsell.mutate(userCommons)
   };
 
   return (
-    <div style={{ backgroundSize: 'cover', backgroundImage: `url(${Background})` }}>
+    <div style={
+      // Stryker disable next-line all : no need to unit test CSS
+      { backgroundSize: 'cover', backgroundImage: `url(${Background})` }}>
       <BasicLayout >
         <Container >
           {!!currentUser && <CommonsPlay currentUser={currentUser} />}
