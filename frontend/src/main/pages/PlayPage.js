@@ -29,10 +29,6 @@ export default function PlayPage() {
         }
       }
     );
-<<<<<<< HEAD
-=======
-  // Stryker restore all 
->>>>>>> b85b5c00 (jw-replace "enable" with "restore", resulting in a lot of failed tests)
 
   const { data: commons } =
     useBackend(
@@ -46,10 +42,6 @@ export default function PlayPage() {
         }
       }
     );
-<<<<<<< HEAD
-=======
-  // Stryker restore all 
->>>>>>> b85b5c00 (jw-replace "enable" with "restore", resulting in a lot of failed tests)
 
   const { data: userCommonsProfits } =
     useBackend(
