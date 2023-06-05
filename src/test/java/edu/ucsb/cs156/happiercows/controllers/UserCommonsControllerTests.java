@@ -182,7 +182,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(280)
       .numOfCows(3)
       .cowHealth(100)
-      .totalCowsBought(2)
+      .totalCowsBought(3)
       .totalCowsSold(0)
       .build();
   
