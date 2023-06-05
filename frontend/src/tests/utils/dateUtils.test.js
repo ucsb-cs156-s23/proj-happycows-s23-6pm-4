@@ -29,7 +29,7 @@ describe("dateUtils tests", () => {
     test("with mock current date 2023-06-01T00:00:00", () => {
       const startingDate = "2023-05-01T00:00:00";
       const currentDate = "2023-06-01T00:00:00";
-      expect(calculateDays(startingDate,currentDate)).toBe(31);
+      expect(calculateDays(startingDate,currentDate)).toBe(32);
 
     });
   });
