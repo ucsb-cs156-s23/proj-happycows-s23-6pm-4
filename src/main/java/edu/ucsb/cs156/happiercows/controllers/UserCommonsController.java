@@ -102,7 +102,9 @@ public class UserCommonsController extends ApiController {
   @PreAuthorize("hasRole('ROLE_USER')")
   @PutMapping("/buy")
   public ResponseEntity<String> putUserCommonsByIdBuy(
-          @ApiParam("commonsId") @RequestParam Long commonsId) throws NotEnoughMoneyException, JsonProcessingException{
+          @ApiParam("commonsId") @RequestParam Long commonsId,
+          @ApiParam("numCows") @RequestParam int numCows)
+          throws NotEnoughMoneyException, JsonProcessingException{
 
         User u = getCurrentUser().getUser();
         Long userId = u.getId();
@@ -113,10 +115,11 @@ public class UserCommonsController extends ApiController {
         .orElseThrow(
             () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
-        if(userCommons.getTotalWealth() >= commons.getCowPrice() ){
-          userCommons.setTotalWealth(userCommons.getTotalWealth() - commons.getCowPrice());
-          userCommons.setNumOfCows(userCommons.getNumOfCows() + 1);
-          userCommons.setTotalCowsBought(userCommons.getTotalCowsBought() + 1);
+          if((numCows > 0) && (userCommons.getTotalWealth() >= (numCows * commons.getCowPrice()))){
+            userCommons.setTotalWealth(userCommons.getTotalWealth() - (numCows * commons.getCowPrice()));
+            userCommons.setNumOfCows(userCommons.getNumOfCows() + numCows);
+            userCommons.setTotalCowsBought(userCommons.getTotalCowsBought() + numCows);
+
         }
         else{
           throw new NotEnoughMoneyException("You need more money!");

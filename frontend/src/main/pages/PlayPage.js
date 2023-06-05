@@ -1,16 +1,15 @@
-import React from "react";
-import { Container, CardGroup } from "react-bootstrap";
+import { CardGroup, Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CommonsOverview from "main/components/Commons/CommonsOverview";
 import CommonsPlay from "main/components/Commons/CommonsPlay";
 import FarmStats from "main/components/Commons/FarmStats";
 import ManageCows from "main/components/Commons/ManageCows";
 import Profits from "main/components/Commons/Profits";
-import { useBackend, useBackendMutation } from "main/utils/useBackend";
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useCurrentUser } from "main/utils/currentUser";
+import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import Background from "../../assets/PlayPageBackground.png";
 
 export default function PlayPage() {
@@ -71,7 +70,8 @@ export default function PlayPage() {
     method: "PUT",
     data: newUserCommons,
     params: {
-      commonsId: commonsId
+      commonsId: commonsId,
+      numCows: 1
     }
   });
 
