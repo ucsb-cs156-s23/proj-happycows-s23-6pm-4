@@ -11,7 +11,7 @@ const calculateDays = (startingDate,currentDate) => {
     const start = new Date(startingDate);
     const today = new Date(currentDate);
     const timeDifference = today.getTime() - start.getTime();
-    const days = Math.floor(timeDifference / (1000 * 3600 * 24));
+    const days = Math.floor(timeDifference / (1000 * 3600 * 24))+1;
     return days;
   }
 
