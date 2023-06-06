@@ -1,4 +1,4 @@
-import { sortByWealth, sortByNumCows, sortByCowHealth } from "../../main/utils/leaderboardSortingUtils"
+import { sortByWealth, sortByNumCows, sortByCowHealth, getPlayerNum } from "../../main/utils/leaderboardSortingUtils"
 import userCommonsFixtures from "../../fixtures/userCommonsFixtures"
 
 describe("leaderboardSortingUtils tests", () => {
@@ -120,5 +120,22 @@ describe("leaderboardSortingUtils tests", () => {
     }
   });
 
+
+  //-----------------------------//
+  //      Total Player Tests
+  //----------------------------//
+
+  test("getPlayerNum for fiveUserCommons", () => {
+    const totalPlayers = getPlayerNum(fiveUserCommons);
+    const expectedPlayers = 5;
+    
+    expect(totalPlayers).toBe(expectedPlayers);
+  });
+  test("getPlayerNum for tenUserCommons", () => {
+    const totalPlayers = getPlayerNum(tenUserCommons);
+    const expectedPlayers = 10;
+    
+    expect(totalPlayers).toBe(expectedPlayers);
+  });
 
 })

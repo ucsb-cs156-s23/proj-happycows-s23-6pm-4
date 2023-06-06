@@ -17,3 +17,9 @@ export function sortByCowHealth(userCommonsArray, returnArraySize = userCommonsA
     return b.cowHealth - a.cowHealth;
   }).slice(0, returnArraySize);
 }
+
+export function getPlayerNum(userCommonsArray) {
+  if (userCommonsArray.length==null){return 0;}
+  
+  return userCommonsArray.length;
+}
