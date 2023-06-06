@@ -7,6 +7,7 @@ import edu.ucsb.cs156.happiercows.repositories.UserCommonsRepository;
 import edu.ucsb.cs156.happiercows.entities.Commons;
 import edu.ucsb.cs156.happiercows.entities.User;
 import edu.ucsb.cs156.happiercows.entities.UserCommons;
+import edu.ucsb.cs156.happiercows.models.CreateUserCommonsParams;
 import edu.ucsb.cs156.happiercows.errors.EntityNotFoundException;
 
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
   private ObjectMapper objectMapper;
 
   public static UserCommons dummyUserCommons(long id) {
-    UserCommons userCommons = new UserCommons(id,1,1,"test",1,1, 100);
+    UserCommons userCommons = new UserCommons(id,1,1,"test",1,1, 100,0,0);
     return userCommons;
   }
   @WithMockUser(roles = { "ADMIN" })
@@ -148,6 +149,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       Commons testCommons = Commons
@@ -168,6 +171,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       UserCommons correctuserCommons = UserCommons
@@ -175,9 +180,11 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .id(1L)
       .userId(1L)
       .commonsId(1L)
-      .totalWealth(300-testCommons.getCowPrice())
-      .numOfCows(2)
+      .totalWealth(280)
+      .numOfCows(3)
       .cowHealth(100)
+      .totalCowsBought(3)
+      .totalCowsSold(0)
       .build();
   
       String requestBody = mapper.writeValueAsString(userCommonsToSend);
@@ -187,7 +194,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
   
       // act
-      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=1")
+      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=1&numCows=2")
           .contentType(MediaType.APPLICATION_JSON)
                       .characterEncoding("utf-8")
                       .content(requestBody)
@@ -215,6 +222,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       Commons testCommons = Commons
@@ -235,6 +244,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       UserCommons correctuserCommons = UserCommons
@@ -245,6 +256,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(0)
       .numOfCows(2)
       .cowHealth(100)
+      .totalCowsBought(2)
+      .totalCowsSold(0)
       .build();
   
       String requestBody = mapper.writeValueAsString(userCommonsToSend);
@@ -254,7 +267,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
   
       // act
-      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=1")
+      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=1&numCows=1")
           .contentType(MediaType.APPLICATION_JSON)
                       .characterEncoding("utf-8")
                       .content(requestBody)
@@ -282,6 +295,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       Commons testCommons = Commons
@@ -301,6 +316,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       UserCommons correctuserCommons = UserCommons
@@ -311,6 +328,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(310)
       .numOfCows(0)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(1)
       .build();
   
       String requestBody = mapper.writeValueAsString(userCommonsToSend);
@@ -482,6 +501,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       Commons testCommons = Commons
@@ -501,6 +522,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       UserCommons correctuserCommons = UserCommons
@@ -511,6 +534,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300-testCommons.getCowPrice())
       .numOfCows(2)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       String requestBody = mapper.writeValueAsString(userCommonsToSend);
@@ -520,7 +545,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       when(commonsRepository.findById(eq(234L))).thenReturn(Optional.of(testCommons));
   
       // act
-      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=234") 
+      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=234&numCows=1") 
           .contentType(MediaType.APPLICATION_JSON)
                       .characterEncoding("utf-8")
                       .content(requestBody)
@@ -550,6 +575,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       Commons testCommons = Commons
@@ -570,6 +597,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       UserCommons correctuserCommons = UserCommons
@@ -580,6 +609,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300+testCommons.getCowPrice())
       .numOfCows(2)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       String requestBody = mapper.writeValueAsString(userCommonsToSend);
@@ -620,6 +651,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       Commons testCommons = Commons
@@ -639,6 +672,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       UserCommons correctuserCommons = UserCommons
@@ -649,6 +684,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300+testCommons.getCowPrice())
       .numOfCows(2)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       String requestBody = mapper.writeValueAsString(userCommonsToSend);
@@ -687,6 +724,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       Commons testCommons = Commons
@@ -706,6 +745,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(1)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       UserCommons correctuserCommons = UserCommons
@@ -716,6 +757,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300+testCommons.getCowPrice())
       .numOfCows(2)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       String requestBody = mapper.writeValueAsString(userCommonsToSend);
@@ -725,7 +768,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
   
       // act
-      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=222")
+      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=222&numCows=1")
           .contentType(MediaType.APPLICATION_JSON)
                       .characterEncoding("utf-8")
                       .content(requestBody)
@@ -756,7 +799,80 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .id(1L)
       .userId(1L)
       .commonsId(1L)
-      .totalWealth(0)
+      .totalWealth(10)
+      .numOfCows(1)
+      .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
+      .build();
+  
+      Commons testCommons = Commons
+      .builder()
+      .name("test commons")
+      .cowPrice(10)
+      .milkPrice(2)
+      .startingBalance(0)
+      .startingDate(LocalDateTime.now())
+      .build();
+  
+      UserCommons userCommonsToSend = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(10)
+      .numOfCows(1)
+      .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
+      .build();
+  
+      UserCommons correctuserCommons = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(10)
+      .numOfCows(1)
+      .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
+      .build();
+  
+      String requestBody = mapper.writeValueAsString(userCommonsToSend);
+      String expectedReturn = mapper.writeValueAsString(correctuserCommons);
+  
+      when(userCommonsRepository.findByCommonsIdAndUserId(eq(1L), eq(1L))).thenReturn(Optional.of(origUserCommons));
+      when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
+  
+      // act
+      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=1&numCows=2")
+          .contentType(MediaType.APPLICATION_JSON)
+                      .characterEncoding("utf-8")
+                      .content(requestBody)
+                      .with(csrf()))
+              .andExpect(status().is(400)).andReturn();
+  
+      // assert
+      String responseString = response.getResponse().getContentAsString();
+      String expectedString = "{\"message\":\"You need more money!\",\"type\":\"NotEnoughMoneyException\"}";
+      Map<String, Object> expectedJson = mapper.readValue(expectedString, Map.class);
+      Map<String, Object> jsonResponse = responseToJson(response);
+      assertEquals(expectedJson, jsonResponse);
+  }
+
+  @WithMockUser(roles = { "USER" })
+  @Test
+  public void test_BuyCow_commons_exists_buy_zero_cows() throws Exception {
+  
+      // arrange
+  
+      UserCommons origUserCommons = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(10)
       .numOfCows(1)
       .cowHealth(100)
       .build();
@@ -775,7 +891,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .id(1L)
       .userId(1L)
       .commonsId(1L)
-      .totalWealth(0)
+      .totalWealth(10)
       .numOfCows(1)
       .cowHealth(100)
       .build();
@@ -785,7 +901,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .id(1L)
       .userId(1L)
       .commonsId(1L)
-      .totalWealth(0)
+      .totalWealth(10)
       .numOfCows(1)
       .cowHealth(100)
       .build();
@@ -797,7 +913,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
   
       // act
-      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=1")
+      MvcResult response = mockMvc.perform(put("/api/usercommons/buy?commonsId=1&numCows=0")
           .contentType(MediaType.APPLICATION_JSON)
                       .characterEncoding("utf-8")
                       .content(requestBody)
@@ -826,6 +942,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(0)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       Commons testCommons = Commons
@@ -845,6 +963,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(0)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       UserCommons correctuserCommons = UserCommons
@@ -855,6 +975,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .totalWealth(300)
       .numOfCows(0)
       .cowHealth(100)
+      .totalCowsBought(1)
+      .totalCowsSold(0)
       .build();
   
       String requestBody = mapper.writeValueAsString(userCommonsToSend);
@@ -985,4 +1107,95 @@ public class UserCommonsControllerTests extends ControllerTestCase {
   
       assertEquals(expectedJson, responseString);
     }
+
+    @WithMockUser(roles = { "ADMIN" })
+    @Test
+    public void test_updateUserCommons() throws Exception {
+
+        // arrange
+        CreateUserCommonsParams parameters = CreateUserCommonsParams.builder()
+            .cowHealth(100)
+            .numOfCows(1)
+            .totalWealth(400)
+            .build();
+
+        UserCommons userCommons = UserCommons.builder()
+            .id(1L)
+            .userId(1L)
+            .commonsId(1L)
+            .totalWealth(999)
+            .numOfCows(100)
+            .cowHealth(99)
+            .build();
+
+        UserCommons correctuserCommons = UserCommons
+            .builder()
+            .id(1L)
+            .userId(1L)
+            .commonsId(1L)
+            .totalWealth(400)
+            .numOfCows(1)
+            .cowHealth(100)
+            .build();
+
+        String requestBody = mapper.writeValueAsString(parameters);
+        String expectedReturn = mapper.writeValueAsString(correctuserCommons);
+    
+        when(userCommonsRepository.findByCommonsIdAndUserId(eq(1L), eq(1L))).thenReturn(Optional.of(userCommons));
+    
+        // act
+        MvcResult response = mockMvc.perform(put("/api/usercommons/update?commonsId=1&userId=1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .characterEncoding("utf-8")
+            .content(requestBody)
+            .with(csrf()))
+            .andExpect(status().isOk()).andReturn();
+    
+        // assert
+        verify(userCommonsRepository, times(1)).findByCommonsIdAndUserId(eq(1L), eq(1L));
+        verify(userCommonsRepository, times(1)).save(correctuserCommons);
+        String responseString = response.getResponse().getContentAsString();
+        assertEquals(expectedReturn, responseString);
+    }
+
+    @WithMockUser(roles = { "ADMIN" })
+    @Test
+    public void test_updateUserCommons_for_userCommons_DOES_NOT_exist() throws Exception {
+
+        // arrange
+        CreateUserCommonsParams parameters = CreateUserCommonsParams.builder()
+            .cowHealth(99)
+            .numOfCows(1)
+            .totalWealth(400)
+            .build();
+
+        UserCommons userCommons = UserCommons.builder()
+            .id(1L)
+            .userId(1L)
+            .commonsId(1L)
+            .totalWealth(999)
+            .numOfCows(100)
+            .cowHealth(99)
+            .build();
+
+        String requestBody = mapper.writeValueAsString(parameters);
+    
+        when(userCommonsRepository.findByCommonsIdAndUserId(eq(1L), eq(1L))).thenReturn(Optional.of(userCommons));
+    
+        // act
+        MvcResult response = mockMvc.perform(put("/api/usercommons/update?commonsId=999&userId=1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .characterEncoding("utf-8")
+            .content(requestBody)
+            .with(csrf()))
+            .andExpect(status().is(404)).andReturn();
+    
+        // assert
+        String responseString = response.getResponse().getContentAsString();
+        String expectedString = "{\"message\":\"UserCommons with commonsId 999 and userId 1 not found\",\"type\":\"EntityNotFoundException\"}";
+        Map<String, Object> expectedJson = mapper.readValue(expectedString, Map.class);
+        Map<String, Object> jsonResponse = responseToJson(response);
+        assertEquals(expectedJson, jsonResponse);
+    }
+
 }

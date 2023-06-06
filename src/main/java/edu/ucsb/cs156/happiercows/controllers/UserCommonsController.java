@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,7 @@ import edu.ucsb.cs156.happiercows.repositories.CommonsRepository;
 import edu.ucsb.cs156.happiercows.entities.User;
 import edu.ucsb.cs156.happiercows.entities.UserCommons;
 import edu.ucsb.cs156.happiercows.entities.Commons;
+import edu.ucsb.cs156.happiercows.models.CreateUserCommonsParams;
 import edu.ucsb.cs156.happiercows.errors.EntityNotFoundException;
 import edu.ucsb.cs156.happiercows.errors.NoCowsException;
 import edu.ucsb.cs156.happiercows.errors.NotEnoughMoneyException;
@@ -72,11 +75,36 @@ public class UserCommonsController extends ApiController {
     return userCommons;
   }
 
+  @ApiOperation(value = "Update a user commons")
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  @PutMapping("/update")
+  public ResponseEntity<String> updateUserCommons(
+          @ApiParam(name = "userId", type = "Long", value = "User ID", required = true) @RequestParam Long userId,
+          @ApiParam(name = "commonsId", type = "Long", value = "Commons ID", required = true) @RequestParam Long commonsId,
+          @ApiParam(name = "request body", type = "CreateUserCommonsParams", value = "User commons fields that need to be changed", required = true) @RequestBody CreateUserCommonsParams params) throws IllegalArgumentException, JsonProcessingException {
+    
+        UserCommons userCommons = userCommonsRepository.findByCommonsIdAndUserId(commonsId, userId)
+          .orElseThrow(
+              () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
+
+        userCommons.setCowHealth(params.getCowHealth());
+        userCommons.setNumOfCows(params.getNumOfCows());
+        userCommons.setTotalWealth(params.getTotalWealth());
+
+        userCommonsRepository.save(userCommons);
+
+        String body = mapper.writeValueAsString(userCommons);
+      
+        return ResponseEntity.ok().body(body);
+  }
+
   @ApiOperation(value = "Buy a cow, totalWealth updated")
   @PreAuthorize("hasRole('ROLE_USER')")
   @PutMapping("/buy")
   public ResponseEntity<String> putUserCommonsByIdBuy(
-          @ApiParam("commonsId") @RequestParam Long commonsId) throws NotEnoughMoneyException, JsonProcessingException{
+          @ApiParam("commonsId") @RequestParam Long commonsId,
+          @ApiParam("numCows") @RequestParam int numCows)
+          throws NotEnoughMoneyException, JsonProcessingException{
 
         User u = getCurrentUser().getUser();
         Long userId = u.getId();
@@ -87,9 +115,11 @@ public class UserCommonsController extends ApiController {
         .orElseThrow(
             () -> new EntityNotFoundException(UserCommons.class, "commonsId", commonsId, "userId", userId));
 
-        if(userCommons.getTotalWealth() >= commons.getCowPrice() ){
-          userCommons.setTotalWealth(userCommons.getTotalWealth() - commons.getCowPrice());
-          userCommons.setNumOfCows(userCommons.getNumOfCows() + 1);
+          if((numCows > 0) && (userCommons.getTotalWealth() >= (numCows * commons.getCowPrice()))){
+            userCommons.setTotalWealth(userCommons.getTotalWealth() - (numCows * commons.getCowPrice()));
+            userCommons.setNumOfCows(userCommons.getNumOfCows() + numCows);
+            userCommons.setTotalCowsBought(userCommons.getTotalCowsBought() + numCows);
+
         }
         else{
           throw new NotEnoughMoneyException("You need more money!");
@@ -123,6 +153,7 @@ public class UserCommonsController extends ApiController {
           userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * (commons.isScaleCowSalePrice() ? (commons.getCowPrice() * (userCommons.getCowHealth()/100))
                                                                                                               : commons.getCowPrice())));
           userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);
+          userCommons.setTotalCowsSold(userCommons.getTotalCowsSold() + numCows);
         }
         else{
           throw new NoCowsException("You have no cows to sell!");

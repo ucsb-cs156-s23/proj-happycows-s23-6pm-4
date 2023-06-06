@@ -486,6 +486,8 @@ public class CommonsControllerTests extends ControllerTestCase {
         .totalWealth(0)
         .numOfCows(0)
         .cowHealth(100)
+        .totalCowsBought(0)
+        .totalCowsSold(0)
         .build();
 
     UserCommons ucSaved = UserCommons.builder()
@@ -496,6 +498,8 @@ public class CommonsControllerTests extends ControllerTestCase {
         .totalWealth(0)
         .numOfCows(0)
         .cowHealth(100)
+        .totalCowsBought(0)
+        .totalCowsSold(0)
         .build();
 
     String requestBody = mapper.writeValueAsString(uc);
