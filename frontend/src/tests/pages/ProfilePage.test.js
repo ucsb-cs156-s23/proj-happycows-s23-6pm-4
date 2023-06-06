@@ -19,7 +19,6 @@ jest.mock("react-router-dom", () => ({
 describe("ProfilePage tests", () => {
     const queryClient = new QueryClient();
     const axiosMock = new AxiosMockAdapter(axios);
-    const testId = "ProfileTable";
 
     beforeEach(()=>{
         axiosMock.reset();
