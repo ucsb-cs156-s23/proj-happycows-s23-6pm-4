@@ -84,13 +84,13 @@ export default function PlayPage() {
     toast(`Cow sold!`);
   }
 
-  const objectToAxiosParamsSell = (newUserCommons) => ({
+  const objectToAxiosParamsSell = ({ newUserCommons, numCows }) => ({
     url: "/api/usercommons/sell",
     method: "PUT",
     data: newUserCommons,
     params: {
       commonsId: commonsId,
-      numCows: 1
+      numCows: numCows
     }
   });
 
@@ -101,8 +101,8 @@ export default function PlayPage() {
     [`/api/usercommons/forcurrentuser?commonsId=${commonsId}`]
   );
 
-  const onSell = (userCommons) => {
-    mutationsell.mutate(userCommons)
+  const onSell = (userCommons, numCows) => {
+    mutationsell.mutate({ userCommons, numCows })
   };
 
   return (
