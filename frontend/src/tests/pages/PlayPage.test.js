@@ -143,12 +143,33 @@ describe("PlayPage tests", () => {
             </QueryClientProvider>
         );
 
-        const sellCowButton = screen.getByTestId("sell-10-cows-button");
-        fireEvent.click(sellCowButton);
+        const sell10CowButtons = screen.getByTestId("sell-10-cows-button");
+        fireEvent.click(sell10CowButtons);
 
         await waitFor(() => expect(axiosMock.history.put.length).toBe(1));
         
         expect(axiosMock.history.put[0].params).toEqual({ commonsId: 1, numCows: 10 });
+        expect(mockToast).toBeCalledWith(`Cow sold!`);
+
+    });
+
+    test("click sell all button", async () => {
+        axiosMock.onPut("/api/usercommons/sell").reply(200, []);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <PlayPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        const sellAllCowsButton = screen.getByTestId("sell-all-cows-button");
+        fireEvent.click(sellAllCowsButton);
+
+        await waitFor(() => expect(axiosMock.history.put.length).toBe(1));
+        
+        expect(axiosMock.history.put[0].params).toEqual({ commonsId: 1, numCows: 5 });
         expect(mockToast).toBeCalledWith(`Cow sold!`);
 
     });
