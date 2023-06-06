@@ -25,6 +25,14 @@ export default function LeaderboardTable({ leaderboardUsers , currentUser }) {
             Header: 'Cow Health',
             accessor: 'cowHealth', 
         },
+        {
+            Header: 'Total Cows Bought',
+            accessor: 'totalCowsBought', 
+        },
+        {
+            Header: 'Total Cows Sold',
+            accessor: 'totalCowsSold', 
+        },
     ];
 
     const testid = "LeaderboardTable";
