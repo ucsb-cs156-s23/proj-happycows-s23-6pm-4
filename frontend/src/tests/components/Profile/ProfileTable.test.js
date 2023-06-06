@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import ProfileTable from "main/components/Commons/ProfileTable"
+import ProfileTable from "main/components/Profile/ProfileTable"
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 

@@ -1,4 +1,4 @@
-import ProfileTable from "main/components/Commons/ProfileTable";
+import ProfileTable from "main/components/Profile/ProfileTable";
 import RoleBadge from "main/components/Profile/RoleBadge";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useCurrentUser } from "main/utils/currentUser";

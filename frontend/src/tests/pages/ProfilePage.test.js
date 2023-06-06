@@ -1,11 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
 import ProfilePage from "main/pages/ProfilePage";
-// import commonsFixtures from "fixtures/commonsFixtures";
+import commonsFixtures from "fixtures/commonsFixtures";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 
@@ -61,4 +61,37 @@ describe("ProfilePage tests", () => {
         expect(screen.getByTestId("role-badge-member")).toBeInTheDocument();
         expect(screen.getByTestId("role-badge-admin")).toBeInTheDocument();
     });
+
+    test("renders without crashing when table has commons", async () => {
+        apiCurrentUserFixtures.userOnly.user.commons = commonsFixtures.oneCommons;
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        axiosMock.onGet("/api/commons/all").reply(200, commonsFixtures.threeCommons);
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <ProfilePage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        expect(await screen.findByText("Phillip Conrad")).toBeInTheDocument();
+        expect(screen.getByText("pconrad.cis@gmail.com")).toBeInTheDocument();
+   });
+
+   test("Redirects to the PlayPage when you click visit", async () => {
+    apiCurrentUserFixtures.userOnly.user.commons = commonsFixtures.oneCommons;
+    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+    axiosMock.onGet("/api/commons/all").reply(200, commonsFixtures.threeCommons);
+    render(
+        <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+                <ProfilePage />
+            </MemoryRouter>
+        </QueryClientProvider>
+    );
+
+    const visitButton = screen.getByTestId(`ProfileTable-cell-row-0-col-Visit-button`);
+    expect(visitButton).toBeInTheDocument();
+    fireEvent.click(visitButton);
+});
 });
