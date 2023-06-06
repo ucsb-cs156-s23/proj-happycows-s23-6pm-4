@@ -40,6 +40,33 @@ describe("ProfileTable tests", () => {
     );
   });
 
+  test("Has the expected column headers", () => {
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ProfileTable commons={commonsFixtures.threeCommons} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
+    );
+
+    const expectedHeaders = ['id','Name','Cow Price','Milk Price','Starting Balance','Starting Date','Degradation Rate','Show Leaderboard?','Carrying Capacity','Visit'];
+
+    expectedHeaders.forEach((headerText) => {
+        if (headerText === 'Visit') {
+            const buttonColumn = screen.getByRole('columnheader', { name: 'Visit' });
+            const buttons = buttonColumn.parentElement.querySelectorAll('.button-column button');
+            buttons.forEach((button) => {
+            expect(button).toBeInTheDocument();
+        });
+        } else {
+          const header = screen.getByText(headerText);
+          expect(header).toBeInTheDocument();
+        }
+      });
+
+  });
 
   test("what happens when you click visit", async () => {
 
