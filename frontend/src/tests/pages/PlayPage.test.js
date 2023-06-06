@@ -90,6 +90,28 @@ describe("PlayPage tests", () => {
 
     });
 
+    test("click buy 10 button", async () => {
+        axiosMock.onPut("/api/usercommons/buy").reply(200, []);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <PlayPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        expect(await screen.findByTestId("buy-10-cows-button")).toBeInTheDocument();
+        const buyCowButton = screen.getByTestId("buy-10-cows-button");
+        fireEvent.click(buyCowButton);
+
+        await waitFor(() => expect(axiosMock.history.put.length).toBe(1));
+
+        expect(axiosMock.history.put[0].params).toEqual({ commonsId: 1, numCows: 10 });
+        expect(mockToast).toBeCalledWith(`Cow bought!`);
+
+    });
+
     test("click sell button", async () => {
         axiosMock.onPut("/api/usercommons/sell").reply(200, []);
 
