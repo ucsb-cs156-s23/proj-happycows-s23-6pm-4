@@ -135,7 +135,7 @@ describe("leaderboardSortingUtils tests", () => {
     const totalPlayers = getPlayerNum(tenUserCommons);
     const expectedPlayers = 10;
     
-    expect(totalPlayers).toBe(expectedPlayers);
+    expect(totalPlayers).toBe(expectedPlayers); 
   });
 
 })

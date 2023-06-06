@@ -21,5 +21,5 @@ export function sortByCowHealth(userCommonsArray, returnArraySize = userCommonsA
 export function getPlayerNum(userCommonsArray) {
   if (userCommonsArray.length==null){return 0;}
   
-  return userCommonsArray.length;
+  return userCommonsArray.length; 
 }
