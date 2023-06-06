@@ -24,6 +24,9 @@ const ManageCows = ({userCommons,commons, onBuy, onSell}) =>  {
                         <Button variant="outline-danger" onClick={()=>{onSell(userCommons, 1)}} data-testid={"sell-cow-button"}>Sell cow</Button>
                         <br/>
                         <br/>
+                        <Button variant="outline-danger" onClick={()=>{onSell(userCommons, 10)}} data-testid={"sell-10-cows-button"}>Sell ten cows</Button>
+                        <br/>
+                        <br/>
                     </Col>
                 </Row>
                     Note: Buying cows buys at current cow price, but selling cows sells at current cow price
