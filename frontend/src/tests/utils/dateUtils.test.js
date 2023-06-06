@@ -1,4 +1,4 @@
-import { padWithZero, timestampToDate } from "main/utils/dateUtils";
+import { padWithZero, timestampToDate, calculateDays} from "main/utils/dateUtils";
 
 
 describe("dateUtils tests", () => {
@@ -22,6 +22,15 @@ describe("dateUtils tests", () => {
   describe("timestampToDate tests", () => {
     it("converts properly", () => {
       expect(timestampToDate(1653346250816)).toBe("2022-05-23");
+    });
+  });
+
+  describe("calculateDays tests", () => {
+    test("with mock current date 2023-06-01T00:00:00", () => {
+      const startingDate = "2023-05-01T00:00:00";
+      const currentDate = "2023-06-01T00:00:00";
+      expect(calculateDays(startingDate,currentDate)).toBe(32);
+
     });
   });
 
