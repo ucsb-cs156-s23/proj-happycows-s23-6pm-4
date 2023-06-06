@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import RoleBadge from "main/components/Profile/RoleBadge";
 import { useCurrentUser } from "main/utils/currentUser";
@@ -7,6 +7,7 @@ import ProfileTable from "main/components/Commons/ProfileTable";
 
 export default function ProfilePage () {
 
+    const [commonsJoined, setCommonsJoined] = useState([]);
     const { data: currentUser } = useCurrentUser();
 
     if (!currentUser.loggedIn) {
@@ -15,19 +16,20 @@ export default function ProfilePage () {
         )
     }
 
-    const { email, pictureUrl, fullName } = currentUser.root.user;
+    const { email, pictureUrl, fullName, commons } = currentUser.root.user;
 
-    // Getting all the commons the user has joined
-    // originally from HomePage.js
-
-    let commonsJoined = currentUser.root.user.commons;
+    useEffect(
+    () => {
+        if (commons) {
+        setCommonsJoined(commons);
+        }
+    }, [commons]
+    );
 
     return (
         <BasicLayout>
-            {/* Profile Header */}
             <Row className="align-items profile-header mb-5 text-center text-md-left">
                 <Col md={2}>
-                    {/* Profile Picture */}
                     <img
                         src={pictureUrl}
                         alt="Profile"
@@ -35,12 +37,10 @@ export default function ProfilePage () {
                     />
                     <h2>{fullName}</h2>
                     <p className="lead text-muted">{email}</p>
-                    {/* Profile Info and Badges */}
                     <RoleBadge role={"ROLE_USER"} currentUser={currentUser}/>
                     <RoleBadge role={"ROLE_MEMBER"} currentUser={currentUser}/>
                     <RoleBadge role={"ROLE_ADMIN"} currentUser={currentUser}/>
                 </Col>
-                {/* Profile Data */}
                 <Col md>
                     <ProfileTable commons={commonsJoined} />
                 </Col>
@@ -48,7 +48,3 @@ export default function ProfilePage () {
         </BasicLayout>
     )
 }
-
-// commonsplus.commons.whateverneeded
-
-// export default ProfilePage;

@@ -5,12 +5,14 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
 import ProfilePage from "main/pages/ProfilePage";
+// import commonsFixtures from "fixtures/commonsFixtures";
 import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 
 describe("ProfilePage tests", () => {
     const queryClient = new QueryClient();
     const axiosMock = new AxiosMockAdapter(axios);
+    const testId = "ProfileTable";
 
     beforeEach(()=>{
         axiosMock.reset();
@@ -20,6 +22,9 @@ describe("ProfilePage tests", () => {
     });
 
     test("renders correctly for regular logged in user", async () => {
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        axiosMock.onGet("/api/commons/all").reply(200, []);
+        
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -28,12 +33,13 @@ describe("ProfilePage tests", () => {
             </QueryClientProvider>
         );
 
-        expect(await screen.findByText("Phillip Conrad")).toBeInTheDocument();
+        expect(await screen.getByText("Phillip Conrad")).toBeInTheDocument();
         expect(screen.getByText("pconrad.cis@gmail.com")).toBeInTheDocument();
     });
 
     test("renders correctly for admin user from UCSB", async () => {
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
+        axiosMock.onGet("/api/commons/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
