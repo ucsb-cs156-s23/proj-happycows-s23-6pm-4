@@ -33,11 +33,11 @@ public class CreateCowDeathParams {
     return zonedDateTime;
   }
 
-  public Integer getcowsKilled() {
+  public Integer getCowsKilled() {
     return cowsKilled;
   }
 
-  public double getavgHealth() {
+  public double getAvgHealth() {
     return avgHealth;
   }
 

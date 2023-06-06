@@ -74,8 +74,8 @@ public class CowDeathController extends ApiController {
           @ApiParam("request body") @RequestBody CreateCowDeathParams params) throws JsonProcessingException {
         CowDeath cowdeath = CowDeath.builder()
             .zonedDateTime(LocalDateTime.now())
-            .cowsKilled(params.getcowsKilled())
-            .avgHealth(params.getavgHealth())
+            .cowsKilled(params.getCowsKilled())
+            .avgHealth(params.getAvgHealth())
             .build();
 
       

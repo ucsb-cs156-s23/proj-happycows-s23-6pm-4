@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.time.ZonedDateTime;
+import org.junit.jupiter.api.Assertions;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -128,6 +129,85 @@ public class CowDeathControllerTests extends ControllerTestCase{
         assertEquals(expectedResponseJson, actualResponse);
     }
   
+
+
+ @Test
+    public void testGetZonedDateTime() {
+        CowDeath cowDeath = CowDeath.builder().build();
+
+        cowDeath.setZonedDateTime(null);
+        
+        Assertions.assertNull(cowDeath.getZonedDateTime());
+    }
+
+    @Test
+    public void testGetCowsKilled() {
+        CowDeath cowDeath = CowDeath.builder().build();
+
+        cowDeath.setCowsKilled(0);
+
+        assertEquals(0, cowDeath.getCowsKilled());
+    }
+
+    @Test
+    public void testGetAvgHealth() {
+        CowDeath cowDeath = CowDeath.builder().build();
+
+        cowDeath.setAvgHealth(0.0);
+
+        assertEquals(0.0, cowDeath.getAvgHealth(), 0.001); 
+    }
+
+
+    @Test
+    public void testSetZonedDateTime() {
+        CowDeath cowDeath = CowDeath.builder().build();
+
+        LocalDateTime dateTime = LocalDateTime.of(2023, 6, 5, 12, 0);
+        cowDeath.setZonedDateTime(dateTime);
+
+        assertEquals(dateTime, cowDeath.getZonedDateTime());
+    }
+
+    @Test
+    public void testSetCowsKilled() {
+        CowDeath cowDeath = CowDeath.builder().build();
+        int cowsKilled = 5;
+        cowDeath.setCowsKilled(cowsKilled);
+
+        assertEquals(cowsKilled, cowDeath.getCowsKilled());
+    }
+
+    @Test
+    public void testSetAvgHealth() {
+        CowDeath cowDeath = CowDeath.builder().build();
+
+        double avgHealth = 3.5;
+        cowDeath.setAvgHealth(avgHealth);
+
+        assertEquals(avgHealth, cowDeath.getAvgHealth(), 0.001); 
+    }
+
+    @Test
+    public void testCreateCowDeathParamsGetters() {
+        CreateCowDeathParams params = CreateCowDeathParams.builder().build();
+        
+        params.setZonedDateTime(null);
+        params.setCowsKilled(null);
+        params.setAvgHealth(Double.NaN);
+
+        Assertions.assertNull(params.getZonedDateTime());
+        Assertions.assertNull(params.getCowsKilled());
+        Assertions.assertTrue(Double.isNaN(params.getAvgHealth()));
+    }
+
+    @Test
+    public void newtestGetZonedDateTime() {
+        LocalDateTime dateTime = LocalDateTime.now();
+        CreateCowDeathParams params = CreateCowDeathParams.builder()
+            .zonedDateTime(dateTime)
+            .build();
+
+        assertEquals(dateTime, params.getZonedDateTime());
+    }
 }
-
-
