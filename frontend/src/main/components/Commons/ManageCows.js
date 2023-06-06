@@ -19,6 +19,7 @@ const ManageCows = ({userCommons,commons, onBuy, onSell}) =>  {
                     </Col>
                     <Col>
                         <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, 10)}} data-testid={"buy-10-cows-button"}>Buy ten cows</Button>
+                        <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, Math.floor(userCommons.totalWealth / commons.cowPrice))}} data-testid={"buy-max-cows-button"}>Buy max cows</Button>
                         <br/>
                         <br/>
                         <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, 1)}} data-testid={"buy-cow-button"}>Buy cow</Button>
