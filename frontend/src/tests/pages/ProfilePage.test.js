@@ -1,13 +1,20 @@
 import { render, screen } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
 
 import ProfilePage from "main/pages/ProfilePage";
 // import commonsFixtures from "fixtures/commonsFixtures";
-import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
+    useParams: () => ({
+        commonsId: 1
+    })
+}));
 
 describe("ProfilePage tests", () => {
     const queryClient = new QueryClient();
@@ -18,7 +25,6 @@ describe("ProfilePage tests", () => {
         axiosMock.reset();
         axiosMock.resetHistory();
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
     });
 
     test("renders correctly for regular logged in user", async () => {
@@ -33,7 +39,7 @@ describe("ProfilePage tests", () => {
             </QueryClientProvider>
         );
 
-        expect(await screen.getByText("Phillip Conrad")).toBeInTheDocument();
+        expect(await screen.findByText("Phillip Conrad")).toBeInTheDocument();
         expect(screen.getByText("pconrad.cis@gmail.com")).toBeInTheDocument();
     });
 
