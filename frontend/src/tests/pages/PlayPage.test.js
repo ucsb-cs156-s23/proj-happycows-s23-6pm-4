@@ -111,7 +111,7 @@ describe("PlayPage tests", () => {
 
     });
 
-    test("click sell button", async () => {
+    test("click sell 10 button", async () => {
         axiosMock.onPut("/api/usercommons/sell").reply(200, []);
 
         render(
