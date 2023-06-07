@@ -118,6 +118,7 @@ public class UserCommonsController extends ApiController {
           if((numCows > 0) && (userCommons.getTotalWealth() >= (numCows * commons.getCowPrice()))){
             userCommons.setTotalWealth(userCommons.getTotalWealth() - (numCows * commons.getCowPrice()));
             userCommons.setNumOfCows(userCommons.getNumOfCows() + numCows);
+            userCommons.setTotalCowsBought(userCommons.getTotalCowsBought() + numCows);
         }
         else{
           throw new NotEnoughMoneyException("You need more money!");
@@ -150,6 +151,7 @@ public class UserCommonsController extends ApiController {
           numCows = Math.min(numCows, userCommons.getNumOfCows());
           userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * commons.getCowPrice()));
           userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);
+          userCommons.setTotalCowsSold(userCommons.getTotalCowsSold() + numCows);
         }
         else{
           throw new NoCowsException("You have no cows to sell!");
