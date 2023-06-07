@@ -54,7 +54,6 @@ describe("PlayPage tests", () => {
             "cowHealth": 98.0,
             "numOfCows": 5
         });
-
     });
 
     test("renders without crashing", () => {
