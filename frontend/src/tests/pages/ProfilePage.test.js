@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import { QueryClient, QueryClientProvider } from "react-query";

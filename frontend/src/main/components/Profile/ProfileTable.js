@@ -1,14 +1,10 @@
 import React from "react";
-import OurTable, {ButtonColumn} from "main/components/OurTable";
+import OurTable from "main/components/OurTable";
 import { useNavigate } from "react-router-dom";
 
 export default function ProfileTable({ commons }) {
 
     const navigate = useNavigate();
-
-    const visitCallback = (cell) => {
-        navigate(`/play/${cell.row.values["id"]}`)
-    }
 
     const columns = [
         {
