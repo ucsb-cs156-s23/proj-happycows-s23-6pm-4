@@ -85,7 +85,7 @@ describe("PlayPage tests", () => {
 
         await waitFor(() => expect(axiosMock.history.put.length).toBe(1));
 
-        expect(axiosMock.history.put[0].params).toEqual({ commonsId: 1 });
+        expect(axiosMock.history.put[0].params).toEqual({ commonsId: 1, numCows: 1 });
         expect(mockToast).toBeCalledWith(`Cow bought!`);
 
     });
