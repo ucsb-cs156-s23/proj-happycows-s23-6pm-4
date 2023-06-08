@@ -4,10 +4,10 @@ import AxiosMockAdapter from "axios-mock-adapter";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
-import ProfilePage from "main/pages/ProfilePage";
 import commonsFixtures from "fixtures/commonsFixtures";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import ProfilePage from "main/pages/ProfilePage";
 
 jest.mock("react-router-dom", () => ({
     ...jest.requireActual("react-router-dom"),
@@ -28,7 +28,7 @@ describe("ProfilePage tests", () => {
 
     test("renders without crashing for regular user", () => {
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-        axiosMock.onGet("/api/commons/allplus").reply(200, []);
+        axiosMock.onGet("/api/usercommons/forcurrentuser").reply(200, commonsFixtures.threeCommons);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -41,7 +41,7 @@ describe("ProfilePage tests", () => {
 
     test("renders without crashing for admin", () => {
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
-        axiosMock.onGet("/api/commons/allplus").reply(200, []);
+        axiosMock.onGet("/api/usercommons/forcurrentuser").reply(200, commonsFixtures.threeCommons);
 
         render(
             <QueryClientProvider client={queryClient}>

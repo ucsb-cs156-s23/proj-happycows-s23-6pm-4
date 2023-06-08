@@ -58,6 +58,16 @@ public class UserCommonsController extends ApiController {
     return userCommons;
   }
 
+  @ApiOperation(value = "Get all user commons for current user")
+  @PreAuthorize("hasRole('ROLE_USER')")
+  @GetMapping("/allforcurrentuser")
+  public Iterable<UserCommons> getAllUserCommons( )throws JsonProcessingException {
+
+    Iterable<UserCommons> userCommons = userCommonsRepository.findAll();
+    
+    return userCommons;
+  }
+
   @ApiOperation(value = "Get a user commons for current user")
   @PreAuthorize("hasRole('ROLE_USER')")
   @GetMapping("/forcurrentuser")

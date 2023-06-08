@@ -2,7 +2,8 @@ import ProfileTable from "main/components/Profile/ProfileTable";
 import RoleBadge from "main/components/Profile/RoleBadge";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useCurrentUser } from "main/utils/currentUser";
-import { useEffect, useState } from "react";
+import { useBackend } from 'main/utils/useBackend';
+import { useState } from "react";
 
 import { Col, Row } from "react-bootstrap";
 
@@ -11,13 +12,21 @@ export default function ProfilePage () {
     const [commonsJoined, setCommonsJoined] = useState([]);
     const { data: currentUser } = useCurrentUser();
 
-    useEffect(
-    () => {
-        if (currentUser?.root?.user?.commons) {
-        setCommonsJoined(currentUser.root.user.commons);
-        }
-    }, [currentUser]
+    const { data: commons, error: _error, status: _status } =
+    useBackend(
+      ["/api/usercommons/allforcurrentuser"],
+      { method: "GET", url: "/api/usercommons/allforcurrentuser" },
+      []
     );
+
+    // useEffect(
+    // () => {
+    //     // Stryker disable next-line OptionalChaining : too many cases to test for too little value
+    //     if (currentUser?.root?.user?.commons) {
+    //     setCommonsJoined(currentUser.root.user.commons);
+    //     }
+    // }, [currentUser]
+    // );
 
     if (!currentUser.loggedIn) {
         return (
@@ -41,7 +50,7 @@ export default function ProfilePage () {
                     <RoleBadge role={"ROLE_ADMIN"} currentUser={currentUser}/>
                 </Col>
                 <Col md>
-                    <ProfileTable commons={commonsJoined} />
+                    <ProfileTable commons={commons} />
                 </Col>
             </Row>
         </BasicLayout>
