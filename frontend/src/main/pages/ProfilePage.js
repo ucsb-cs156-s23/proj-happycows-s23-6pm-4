@@ -25,17 +25,15 @@ const ProfilePage = () => {
                         alt="Profile"
                         className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
                     />
-                </Col>
-                <Col md>
                     <h2>{fullName}</h2>
                     <p className="lead text-muted">{email}</p>
                     <RoleBadge role={"ROLE_USER"} currentUser={currentUser}/>
                     <RoleBadge role={"ROLE_MEMBER"} currentUser={currentUser}/>
                     <RoleBadge role={"ROLE_ADMIN"} currentUser={currentUser}/>
                 </Col>
-            </Row>
-            <Row className="text-left">
-                <ReactJson src={currentUser.root} />
+                <Col>
+                    <ReactJson src={currentUser.root} />
+                </Col>
             </Row>
         </BasicLayout>
     );
