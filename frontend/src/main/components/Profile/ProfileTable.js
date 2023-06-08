@@ -1,10 +1,7 @@
 import React from "react";
 import OurTable from "main/components/OurTable";
-import { useNavigate } from "react-router-dom";
 
 export default function ProfileTable({ commons }) {
-
-    const navigate = useNavigate();
 
     const columns = [
         {

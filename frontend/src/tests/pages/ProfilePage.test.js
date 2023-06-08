@@ -26,6 +26,32 @@ describe("ProfilePage tests", () => {
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     });
 
+    test("renders without crashing for regular user", () => {
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        axiosMock.onGet("/api/commons/allplus").reply(200, []);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <ProfilePage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+    });
+
+    test("renders without crashing for admin", () => {
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
+        axiosMock.onGet("/api/commons/allplus").reply(200, []);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <ProfilePage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+    });
+
     test("renders correctly for regular logged in user", async () => {
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
         axiosMock.onGet("/api/commons/all").reply(200, []);
@@ -61,6 +87,18 @@ describe("ProfilePage tests", () => {
         expect(screen.getByTestId("role-badge-admin")).toBeInTheDocument();
     });
 
+    test("renders without crashing when table returns empty", () => {
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        axiosMock.onGet("/api/commons/all").reply(200, []);
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <ProfilePage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        });
+
     test("renders without crashing when table has commons", async () => {
         apiCurrentUserFixtures.userOnly.user.commons = commonsFixtures.oneCommons;
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
@@ -76,6 +114,5 @@ describe("ProfilePage tests", () => {
         expect(await screen.findByText("Phillip Conrad")).toBeInTheDocument();
         expect(screen.getByText("pconrad.cis@gmail.com")).toBeInTheDocument();
    });
-
 
 });

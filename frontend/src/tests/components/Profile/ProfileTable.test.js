@@ -40,8 +40,7 @@ describe("ProfileTable tests", () => {
     );
   });
 
-  test("Has the expected column headers", async () => {
-
+  test("Has the expected column headers and content", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
@@ -51,13 +50,21 @@ describe("ProfileTable tests", () => {
 
     );
 
-    const expectedHeaders = ['id','Name','Cow Price','Milk Price','Starting Balance','Starting Date','Degradation Rate','Show Leaderboard?','Carrying Capacity'];
+    const expectedHeaders = ["id", "Name", "Cow Price", 'Milk Price', 'Starting Balance', 'Starting Date', 'Degradation Rate', 'Carrying Capacity'];
+    const expectedFields = ["id", "name", "cowPrice", "milkPrice", "startingBalance", "startingDate", "degradationRate", "carryingCapacity"];
 
     expectedHeaders.forEach((headerText) => {
-        const header = screen.getByText(headerText);
-        expect(header).toBeInTheDocument();
-      });
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
 
+    expectedFields.forEach((field) => {
+      const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(header).toBeInTheDocument();
+    });
+
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("5");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("4");
   });
 
 
