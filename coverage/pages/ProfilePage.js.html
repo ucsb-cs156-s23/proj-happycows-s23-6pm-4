@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/4</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
                 <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>1/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
@@ -105,41 +105,25 @@
 <a name='L40'></a><a href='#L40'>40</a>
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
-<a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a>
-<a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a>
-<a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -161,26 +145,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import ProfileTable from "main/components/Profile/ProfileTable";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
+import { Row, Col } from "react-bootstrap";
 import RoleBadge from "main/components/Profile/RoleBadge";
-import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useCurrentUser } from "main/utils/currentUser";
-import { useEffect, useState } from "react";
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 &nbsp;
-import { Col, Row } from "react-bootstrap";
+import ReactJson from "react-json-view";
+const ProfilePage = () =&gt; {
 &nbsp;
-export default function ProfilePage () {
-&nbsp;
-    const [commonsJoined, setCommonsJoined] = useState([]);
     const { data: currentUser } = useCurrentUser();
-&nbsp;
-    useEffect(
-    () =&gt; {
-        if (currentUser?.root?.user?.commons) {
-        setCommonsJoined(currentUser.root.user.commons);
-        }
-    }, [currentUser]
-    );
 &nbsp;
     if (!currentUser.loggedIn) {
         return (
@@ -188,28 +164,31 @@ export default function ProfilePage () {
         )
     }
 &nbsp;
+    const { email, pictureUrl, fullName } = currentUser.root.user;
     return (
         &lt;BasicLayout&gt;
-            &lt;Row className="align-items profile-header mb-5 text-center text-md-left"&gt;
-                &lt;Col md={2}&gt;
+            &lt;Row className="profile-header mb-5"&gt;
+                &lt;Col md={3} className="text-center"&gt;
                     &lt;img
-                        src={currentUser.root.user.pictureUrl}
+                        src={pictureUrl}
                         alt="Profile"
                         className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
                     /&gt;
-                    &lt;h2&gt;{currentUser.root.user.fullName}&lt;/h2&gt;
-                    &lt;p className="lead text-muted"&gt;{currentUser.root.user.email}&lt;/p&gt;
+                    &lt;h2&gt;{fullName}&lt;/h2&gt;
+                    &lt;p className="lead text-muted"&gt;{email}&lt;/p&gt;
                     &lt;RoleBadge role={"ROLE_USER"} currentUser={currentUser}/&gt;
                     &lt;RoleBadge role={"ROLE_MEMBER"} currentUser={currentUser}/&gt;
                     &lt;RoleBadge role={"ROLE_ADMIN"} currentUser={currentUser}/&gt;
                 &lt;/Col&gt;
-                &lt;Col md&gt;
-                    &lt;ProfileTable commons={commonsJoined} /&gt;
+                &lt;Col className="text-md-left"&gt;
+                    &lt;ReactJson src={currentUser.root.user.commons} /&gt;
                 &lt;/Col&gt;
             &lt;/Row&gt;
         &lt;/BasicLayout&gt;
-    )
-}
+    );
+};
+&nbsp;
+export default ProfilePage;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -217,7 +196,7 @@ export default function ProfilePage () {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed Jun 07 2023 18:49:38 GMT-0700 (Pacific Daylight Time)
+                at Thu Jun 08 2023 12:35:27 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../prettify.js"></script>
         <script>
