@@ -40,8 +40,8 @@ export default function CommonsTable({ commons }) {
         },
         {
             Header:'Show Leaderboard?',
-            id: 'showLeaderboard', // needed for tests
-            accessor: (row, _rowIndex) => String(row.showLeaderboard) // hack needed for boolean values to show up
+            id: 'showLeaderboard',
+            accessor: (row, _rowIndex) => String(row.showLeaderboard)
         },
         {
             Header: 'Cows',
