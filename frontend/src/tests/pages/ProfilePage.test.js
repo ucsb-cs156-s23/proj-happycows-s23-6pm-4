@@ -77,20 +77,5 @@ describe("ProfilePage tests", () => {
         expect(screen.getByText("pconrad.cis@gmail.com")).toBeInTheDocument();
    });
 
-   test("Redirects to the PlayPage when you click visit", async () => {
-    apiCurrentUserFixtures.userOnly.user.commons = commonsFixtures.oneCommons;
-    axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-    axiosMock.onGet("/api/commons/all").reply(200, commonsFixtures.threeCommons);
-    render(
-        <QueryClientProvider client={queryClient}>
-            <MemoryRouter>
-                <ProfilePage />
-            </MemoryRouter>
-        </QueryClientProvider>
-    );
 
-    const visitButton = screen.getByTestId(`ProfileTable-cell-row-0-col-Visit-button`);
-    expect(visitButton).toBeInTheDocument();
-    fireEvent.click(visitButton);
-});
 });

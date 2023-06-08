@@ -40,7 +40,7 @@ describe("ProfileTable tests", () => {
     );
   });
 
-  test("Has the expected column headers", () => {
+  test("Has the expected column headers", async () => {
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -51,42 +51,15 @@ describe("ProfileTable tests", () => {
 
     );
 
-    const expectedHeaders = ['id','Name','Cow Price','Milk Price','Starting Balance','Starting Date','Degradation Rate','Show Leaderboard?','Carrying Capacity','Visit'];
+    const expectedHeaders = ['id','Name','Cow Price','Milk Price','Starting Balance','Starting Date','Degradation Rate','Show Leaderboard?','Carrying Capacity'];
 
     expectedHeaders.forEach((headerText) => {
-        if (headerText === 'Visit') {
-            const buttonColumn = screen.getByRole('columnheader', { name: 'Visit' });
-            const buttons = buttonColumn.parentElement.querySelectorAll('.button-column button');
-            buttons.forEach((button) => {
-            expect(button).toBeInTheDocument();
-        });
-        } else {
-          const header = screen.getByText(headerText);
-          expect(header).toBeInTheDocument();
-        }
+        const header = screen.getByText(headerText);
+        expect(header).toBeInTheDocument();
       });
 
   });
 
-  test("what happens when you click visit", async () => {
-
-    render(
-        <QueryClientProvider client={queryClient}>
-            <MemoryRouter>
-                <ProfileTable commons={commonsFixtures.threeCommons} />
-            </MemoryRouter>
-        </QueryClientProvider>
-    );
-
-    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("5");
-  
-    const visitButton = screen.getByTestId(`${testId}-cell-row-0-col-Visit-button`);
-    expect(visitButton).toBeInTheDocument();
-
-    fireEvent.click(visitButton);
-
-    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/play/5'));
-    });
 
     test("renders one common without crashing", async () => {
 

@@ -52,17 +52,9 @@ export default function ProfileTable({ commons }) {
 
     const testid = "ProfileTable";
 
-    const buttonColumn = [
-        ...columns,
-        ButtonColumn("Visit",
-"primary", visitCallback, testid)
-    ];
-
-    const columnsToDisplay = buttonColumn;
-
     return <OurTable
         data={commons}
-        columns={columnsToDisplay}
+        columns={columns}
         testid={testid}
     />;
 };
