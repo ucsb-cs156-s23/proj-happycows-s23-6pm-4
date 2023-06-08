@@ -3,8 +3,8 @@ import { Row, Col } from "react-bootstrap";
 import RoleBadge from "main/components/Profile/RoleBadge";
 import { useCurrentUser } from "main/utils/currentUser";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import ProfileTable from "main/components/Profile/ProfileTable"
 
-import ReactJson from "react-json-view";
 const ProfilePage = () => {
 
     const { data: currentUser } = useCurrentUser();
@@ -32,7 +32,7 @@ const ProfilePage = () => {
                     <RoleBadge role={"ROLE_ADMIN"} currentUser={currentUser}/>
                 </Col>
                 <Col className="text-md-left">
-                    <ReactJson src={currentUser.root.user.commons} />
+                    <ProfileTable commons={currentUser.root.user.commons} />
                 </Col>
             </Row>
         </BasicLayout>
