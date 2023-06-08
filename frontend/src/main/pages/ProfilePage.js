@@ -18,8 +18,8 @@ const ProfilePage = () => {
     const { email, pictureUrl, fullName } = currentUser.root.user;
     return (
         <BasicLayout>
-            <Row className="profile-header mb-5 text-center text-md-left">
-                <Col md={2}>
+            <Row className="profile-header mb-5">
+                <Col md={3} className="text-center">
                     <img
                         src={pictureUrl}
                         alt="Profile"
@@ -31,7 +31,7 @@ const ProfilePage = () => {
                     <RoleBadge role={"ROLE_MEMBER"} currentUser={currentUser}/>
                     <RoleBadge role={"ROLE_ADMIN"} currentUser={currentUser}/>
                 </Col>
-                <Col>
+                <Col className="text-md-left">
                     <ReactJson src={currentUser.root.user.commons} />
                 </Col>
             </Row>
