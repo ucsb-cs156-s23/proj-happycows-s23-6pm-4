@@ -160,6 +160,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .milkPrice(2)
       .startingBalance(300)
       .startingDate(LocalDateTime.now())
+      .scaleCowSalePrice(true)
       .build();
   
       UserCommons userCommonsToSend = UserCommons
@@ -232,6 +233,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .milkPrice(2)
       .startingBalance(300)
       .startingDate(LocalDateTime.now())
+      .scaleCowSalePrice(false)
       .build();
   
       UserCommons userCommonsToSend = UserCommons
@@ -353,7 +355,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
 
   @WithMockUser(roles = { "USER" })
   @Test
-  public void test_SellCow_commons_exists_sell_multiple_cows() throws Exception {
+  public void test_SellCow_commons_exists_sell_multiple_cows_no_price_scaling() throws Exception {
   
       // arrange
   
@@ -364,8 +366,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .commonsId(1L)
       .totalWealth(300)
       .numOfCows(5)
-      .cowHealth(100)
-      .totalCowsSold(0)
+      .cowHealth(50)
+      .totalCowsSold(5)
       .build();
   
       Commons testCommons = Commons
@@ -375,6 +377,7 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .milkPrice(2)
       .startingBalance(300)
       .startingDate(LocalDateTime.now())
+      .scaleCowSalePrice(false)
       .build();
   
       UserCommons userCommonsToSend = UserCommons
@@ -384,8 +387,8 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .commonsId(1L)
       .totalWealth(300)
       .numOfCows(5)
-      .cowHealth(100)
-      .totalCowsSold(0)
+      .cowHealth(50)
+      .totalCowsSold(5)
       .build();
   
       UserCommons correctuserCommons = UserCommons
@@ -395,8 +398,78 @@ public class UserCommonsControllerTests extends ControllerTestCase {
       .commonsId(1L)
       .totalWealth(330)
       .numOfCows(2)
-      .cowHealth(100)
-      .totalCowsSold(3)
+      .cowHealth(50)
+      .totalCowsSold(8)
+      .build();
+  
+      String requestBody = mapper.writeValueAsString(userCommonsToSend);
+      String expectedReturn = mapper.writeValueAsString(correctuserCommons);
+  
+      when(userCommonsRepository.findByCommonsIdAndUserId(eq(1L), eq(1L))).thenReturn(Optional.of(origUserCommons));
+      when(commonsRepository.findById(eq(1L))).thenReturn(Optional.of(testCommons));
+  
+      // act
+      MvcResult response = mockMvc.perform(put("/api/usercommons/sell?commonsId=1&numCows=3")
+          .contentType(MediaType.APPLICATION_JSON)
+                      .characterEncoding("utf-8")
+                      .content(requestBody)
+                      .with(csrf()))
+              .andExpect(status().isOk()).andReturn();
+  
+      // assert
+      verify(userCommonsRepository, times(1)).findByCommonsIdAndUserId(eq(1L), eq(1L));
+      verify(userCommonsRepository, times(1)).save(correctuserCommons);
+      String responseString = response.getResponse().getContentAsString();
+      assertEquals(expectedReturn, responseString);
+  }
+
+  @WithMockUser(roles = { "USER" })
+  @Test
+  public void test_SellCow_commons_exists_sell_multiple_cows_with_price_scaling() throws Exception {
+  
+      // arrange
+  
+      UserCommons origUserCommons = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(300)
+      .numOfCows(5)
+      .cowHealth(50)
+      .totalCowsSold(5)
+      .build();
+  
+      Commons testCommons = Commons
+      .builder()
+      .name("test commons")
+      .cowPrice(10)
+      .milkPrice(2)
+      .startingBalance(300)
+      .startingDate(LocalDateTime.now())
+      .scaleCowSalePrice(true)
+      .build();
+  
+      UserCommons userCommonsToSend = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(300)
+      .numOfCows(5)
+      .cowHealth(50)
+      .totalCowsSold(5)
+      .build();
+  
+      UserCommons correctuserCommons = UserCommons
+      .builder()
+      .id(1L)
+      .userId(1L)
+      .commonsId(1L)
+      .totalWealth(315)
+      .numOfCows(2)
+      .cowHealth(50)
+      .totalCowsSold(8)
       .build();
   
       String requestBody = mapper.writeValueAsString(userCommonsToSend);

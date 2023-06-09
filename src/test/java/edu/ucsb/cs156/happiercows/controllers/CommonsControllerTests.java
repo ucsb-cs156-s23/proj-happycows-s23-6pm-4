@@ -73,6 +73,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(50.0)
+        .scaleCowSalePrice(false)
         .showLeaderboard(false)
         .carryingCapacity(100)
         .build();
@@ -84,6 +85,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(50.0)
+        .scaleCowSalePrice(false)
         .showLeaderboard(false)
         .carryingCapacity(100)
         .build();
@@ -120,6 +122,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(0)
+        .scaleCowSalePrice(false)
         .showLeaderboard(false)
         .carryingCapacity(100)
         .build();
@@ -131,6 +134,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(0)
+        .scaleCowSalePrice(false)
         .showLeaderboard(false)
         .carryingCapacity(100)
         .build();
@@ -167,6 +171,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(-8.49)
+        .scaleCowSalePrice(false)
         .carryingCapacity(100)
         .build();
 
@@ -177,6 +182,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(-8.49)
+        .scaleCowSalePrice(false)
         .carryingCapacity(100)
         .build();
 
@@ -230,6 +236,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(50.0)
+        .scaleCowSalePrice(true)
         .showLeaderboard(true)
         .carryingCapacity(100)
         .build();
@@ -241,6 +248,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(50.0)
+        .scaleCowSalePrice(true)
         .showLeaderboard(true)
         .carryingCapacity(100)
         .build();
@@ -263,6 +271,8 @@ public class CommonsControllerTests extends ControllerTestCase {
     commons.setMilkPrice(parameters.getMilkPrice());
     parameters.setDegradationRate(parameters.getDegradationRate() + 1.00);
     commons.setDegradationRate(parameters.getDegradationRate());
+    parameters.setScaleCowSalePrice(false);
+    commons.setScaleCowSalePrice(parameters.getScaleCowSalePrice());
     parameters.setShowLeaderboard(false);
     commons.setShowLeaderboard(parameters.getShowLeaderboard());
     parameters.setCarryingCapacity(123);
@@ -298,6 +308,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(8.49)
+        .scaleCowSalePrice(false)
         .showLeaderboard(false)
         .carryingCapacity(100)
         .build();
@@ -309,6 +320,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(8.49)
+        .scaleCowSalePrice(false)
         .showLeaderboard(false)
         .carryingCapacity(100)
         .build();
@@ -364,6 +376,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(8.49)
+        .scaleCowSalePrice(false)
         .showLeaderboard(false)
         .carryingCapacity(100)
         .build();
@@ -375,6 +388,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(8.49)
+        .scaleCowSalePrice(false)
         .showLeaderboard(false)
         .carryingCapacity(100)
         .build();
@@ -624,6 +638,7 @@ public class CommonsControllerTests extends ControllerTestCase {
         .startingBalance(1020.10)
         .startingDate(someTime)
         .degradationRate(50.0)
+        .scaleCowSalePrice(false)
         .showLeaderboard(false)
         .carryingCapacity(100)
         .build();
