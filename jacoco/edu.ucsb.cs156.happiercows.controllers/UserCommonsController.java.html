@@ -150,28 +150,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 <span class="fc bfc" id="L151" title="All 4 branches covered.">        if((userCommons.getNumOfCows() &gt;= 1) &amp;&amp; (numCows &gt;= 1)){</span>
 <span class="fc" id="L152">          numCows = Math.min(numCows, userCommons.getNumOfCows());</span>
-<span class="fc" id="L153">          userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * commons.getCowPrice()));</span>
-<span class="fc" id="L154">          userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);</span>
-<span class="fc" id="L155">          userCommons.setTotalCowsSold(userCommons.getTotalCowsSold() + numCows);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">          userCommons.setTotalWealth(userCommons.getTotalWealth() + (numCows * (commons.isScaleCowSalePrice() ? (commons.getCowPrice() * (userCommons.getCowHealth()/100))</span>
+<span class="fc" id="L154">                                                                                                              : commons.getCowPrice())));</span>
+<span class="fc" id="L155">          userCommons.setNumOfCows(userCommons.getNumOfCows() - numCows);</span>
+<span class="fc" id="L156">          userCommons.setTotalCowsSold(userCommons.getTotalCowsSold() + numCows);</span>
         }
         else{
-<span class="fc" id="L158">          throw new NoCowsException(&quot;You have no cows to sell!&quot;);</span>
+<span class="fc" id="L159">          throw new NoCowsException(&quot;You have no cows to sell!&quot;);</span>
         }
-<span class="fc" id="L160">        userCommonsRepository.save(userCommons);</span>
+<span class="fc" id="L161">        userCommonsRepository.save(userCommons);</span>
 
-<span class="fc" id="L162">        String body = mapper.writeValueAsString(userCommons);</span>
-<span class="fc" id="L163">        return ResponseEntity.ok().body(body);</span>
+<span class="fc" id="L163">        String body = mapper.writeValueAsString(userCommons);</span>
+<span class="fc" id="L164">        return ResponseEntity.ok().body(body);</span>
     }
 
     @ApiOperation(value = &quot;Get all user commons for a specific commons&quot;)
     @GetMapping(&quot;/commons/all&quot;)
     public  ResponseEntity&lt;String&gt; getUsersCommonsByCommonsId(
         @ApiParam(&quot;commonsId&quot;) @RequestParam Long commonsId) throws JsonProcessingException {
-<span class="fc" id="L170">      Iterable&lt;UserCommons&gt; uc = userCommonsRepository.findByCommonsId(commonsId);</span>
+<span class="fc" id="L171">      Iterable&lt;UserCommons&gt; uc = userCommonsRepository.findByCommonsId(commonsId);</span>
       
    
-<span class="fc" id="L173">    String body = mapper.writeValueAsString(uc);</span>
-<span class="fc" id="L174">    return ResponseEntity.ok().body(body);</span>
+<span class="fc" id="L174">    String body = mapper.writeValueAsString(uc);</span>
+<span class="fc" id="L175">    return ResponseEntity.ok().body(body);</span>
   }
 
 }
