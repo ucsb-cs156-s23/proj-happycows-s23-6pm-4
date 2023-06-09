@@ -14,7 +14,6 @@ import java.net.ConnectException;
 public class FrontendProxyController {
   @GetMapping({"/", "/{path:^(?!api|oauth2|swagger-ui).*}/**"})
   public ResponseEntity<String> proxy(ProxyExchange<String> proxy) {
-
     String path = proxy.path("/");
     try {
       return proxy.uri("http://localhost:3000/" + path).get();
