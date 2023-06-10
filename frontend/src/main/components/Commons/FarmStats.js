@@ -1,7 +1,6 @@
-import React from "react";
 import { Card } from "react-bootstrap";
-import Health from "./../../../assets/Health.png";
 import Cash from "./../../../assets/Cash.png";
+import Health from "./../../../assets/Health.png";
 
 const FarmStats = ({userCommons}) => {
     return (
