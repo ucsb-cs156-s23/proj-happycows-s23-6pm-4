@@ -1,12 +1,12 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
 
-import AdminEditCommonsPage from "main/pages/AdminEditCommonsPage";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import AdminEditCommonsPage from "main/pages/AdminEditCommonsPage";
 
 const mockToast = jest.fn();
 jest.mock('react-toastify', () => {
@@ -49,6 +49,7 @@ describe("AdminEditCommonsPage tests", () => {
                 "milkPrice": 10,
                 "degradationRate": 20.3,
                 "carryingCapacity": 100,
+                "scaleCowSalePrice": false,
                 "showLeaderboard": false,
             });
             axiosMock.onPut('/api/commons/update').reply(200, {
@@ -60,6 +61,7 @@ describe("AdminEditCommonsPage tests", () => {
                 "milkPrice": 5,
                 "degradationRate": 40.3,
                 "carryingCapacity": 200,
+                "scaleCowSalePrice": false,
                 "showLeaderboard": false,
             });
         });
@@ -93,6 +95,7 @@ describe("AdminEditCommonsPage tests", () => {
             const startingDateField = screen.getByLabelText(/Starting Date/);
             const degradationRateField = screen.getByLabelText(/Degradation Rate/);
             const carryingCapacityField = screen.getByLabelText(/Carrying Capacity/);
+            const scaleCowSalePrice = screen.getByLabelText(/Decrease Sale Price of Unhealthy Cows\?/);
             const showLeaderboardField = screen.getByLabelText(/Show Leaderboard\?/);
 
             expect(nameField).toHaveValue("Seths Common");
@@ -102,6 +105,7 @@ describe("AdminEditCommonsPage tests", () => {
             expect(milkPriceField).toHaveValue(10);
             expect(degradationRateField).toHaveValue(20.3);
             expect(carryingCapacityField).toHaveValue(100);
+            expect(scaleCowSalePrice).not.toBeChecked();
             expect(showLeaderboardField).not.toBeChecked();
         });
 
@@ -123,6 +127,7 @@ describe("AdminEditCommonsPage tests", () => {
             const startingDateField = screen.getByLabelText(/Starting Date/);
             const degradationRateField = screen.getByLabelText(/Degradation Rate/);
             const carryingCapacityField = screen.getByLabelText(/Carrying Capacity/);
+            const scaleCowSalePrice = screen.getByLabelText(/Decrease Sale Price of Unhealthy Cows\?/);
             const showLeaderboardField = screen.getByLabelText(/Show Leaderboard\?/);
 
             expect(nameField).toHaveValue("Seths Common");
@@ -132,6 +137,7 @@ describe("AdminEditCommonsPage tests", () => {
             expect(milkPriceField).toHaveValue(10);
             expect(degradationRateField).toHaveValue(20.3);
             expect(carryingCapacityField).toHaveValue(100);
+            expect(scaleCowSalePrice).not.toBeChecked();
             expect(showLeaderboardField).not.toBeChecked();
 
             const submitButton = screen.getByText("Update");
@@ -145,6 +151,7 @@ describe("AdminEditCommonsPage tests", () => {
             fireEvent.change(milkPriceField, { target: { value: 5 } })
             fireEvent.change(degradationRateField, { target: { value: 40.3 } })
             fireEvent.change(carryingCapacityField, { target: { value: 200 } })
+            fireEvent.click(scaleCowSalePrice)
             fireEvent.click(showLeaderboardField)
 
             fireEvent.click(submitButton);
@@ -163,6 +170,7 @@ describe("AdminEditCommonsPage tests", () => {
                 "startingDate": "2022-03-07T00:00:00.000Z",
                 "degradationRate": 40.3,
                 "carryingCapacity": 200,
+                "scaleCowSalePrice": true,
                 "showLeaderboard": true,
             })); // posted object
         });
