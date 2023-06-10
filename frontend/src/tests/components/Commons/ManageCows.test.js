@@ -20,6 +20,7 @@ describe("ManageCows tests", () => {
         const buy10Button = screen.getByTestId("buy-10-cows-button");
         const buyButton = screen.getByTestId("buy-cow-button");
         const sellButton = screen.getByTestId("sell-cow-button");
+        const sell10Button = screen.getByTestId("sell-10-cows-button");
         
         fireEvent.click(buy10Button);
         await waitFor( ()=>expect(mockBuy).toHaveBeenCalled() );
@@ -28,6 +29,9 @@ describe("ManageCows tests", () => {
         await waitFor( ()=>expect(mockBuy).toHaveBeenCalled() );
 
         fireEvent.click(sellButton);
+        await waitFor( ()=>expect(mockSell).toHaveBeenCalled() );
+
+        fireEvent.click(sell10Button);
         await waitFor( ()=>expect(mockSell).toHaveBeenCalled() );
         
     });

@@ -132,6 +132,27 @@ describe("PlayPage tests", () => {
 
     });
 
+    test("click sell 10 button", async () => {
+        axiosMock.onPut("/api/usercommons/sell").reply(200, []);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <PlayPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        const sellCowButton = screen.getByTestId("sell-10-cows-button");
+        fireEvent.click(sellCowButton);
+
+        await waitFor(() => expect(axiosMock.history.put.length).toBe(1));
+        
+        expect(axiosMock.history.put[0].params).toEqual({ commonsId: 1, numCows: 10 });
+        expect(mockToast).toBeCalledWith(`Cow sold!`);
+
+    });
+
     test("render profits table", async () => {
         axiosMock.onGet("/api/profits/all/commonsid", { params: { commonsId: 1} }).reply(200, [{
             "id": 1,
