@@ -159,6 +159,16 @@ function CommonsForm({ initialCommons, submitAction, buttonLabel = "Create" }) {
       </Form.Group>
 
       <Form.Group className="mb-3">
+        <Form.Label htmlFor="scaleCowSalePrice">Decrease Sale Price of Unhealthy Cows?</Form.Label>
+        <Form.Check 
+          data-testid={`${testid}-scaleCowSalePrice`}
+          type="checkbox"
+          id="scaleCowSalePrice"
+          {...register("scaleCowSalePrice")}
+        />
+      </Form.Group>
+
+      <Form.Group className="mb-3">
         <Form.Label htmlFor="showLeaderboard">Show Leaderboard?</Form.Label>
         <Form.Check 
           data-testid={`${testid}-showLeaderboard`}
