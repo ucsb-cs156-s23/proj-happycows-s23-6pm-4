@@ -1,6 +1,5 @@
-import React from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
-import cowHead from "./../../../assets/CowHead.png"; 
+import { Button, Card, Col, Row } from "react-bootstrap";
+import cowHead from "./../../../assets/CowHead.png";
 
 // add parameters 
 const ManageCows = ({userCommons,commons, onBuy, onSell}) =>  {
@@ -19,7 +18,7 @@ const ManageCows = ({userCommons,commons, onBuy, onSell}) =>  {
                         </Card.Text>
                     </Col>
                     <Col>
-                        <Button variant="outline-danger" onClick={()=>{onBuy(userCommons)}} data-testid={"buy-cow-button"}>Buy cow</Button>
+                        <Button variant="outline-danger" onClick={()=>{onBuy(userCommons, 1)}} data-testid={"buy-cow-button"}>Buy cow</Button>
                         <br/>
                         <br/>
                         <Button variant="outline-danger" onClick={()=>{onSell(userCommons)}} data-testid={"sell-cow-button"}>Sell cow</Button>
